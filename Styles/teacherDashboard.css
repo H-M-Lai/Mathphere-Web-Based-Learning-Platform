@@ -1,0 +1,79 @@
+﻿body {
+    font-family: 'Space Grotesk', sans-serif;
+    background-color: #f8fafc;
+}
+
+.graph-bg {
+    background-image: linear-gradient(#e2e8f0 1.5px, transparent 1.5px), linear-gradient(90deg, #e2e8f0 1.5px, transparent 1.5px);
+    background-size: 50px 50px;
+}
+
+.chart-grid {
+    background-image: linear-gradient(to top, #f1f5f9 2px, transparent 2px);
+    background-size: 100% 25%; /* Aligns with 25%, 50%, 75% marks */
+}
+
+.material-symbols-outlined {
+    font-variation-settings: 'FILL' 1, 'wght' 600, 'GRAD' 0, 'opsz' 24;
+}
+
+.fill-icon {
+    font-variation-settings: 'FILL' 1, 'wght' 600, 'GRAD' 0, 'opsz' 24;
+}
+
+.shadow-2xl {
+    box-shadow: 0 25px 50px -12px rgba(30, 58, 138, 0.08);
+}
+
+section {
+    transition: transform 0.3s ease;
+}
+
+    section:hover {
+        transform: translateY(-4px);
+    }
+
+/* Custom Tailwind color classes */
+.math-blue {
+    color: #2563eb;
+}
+
+.bg-math-blue {
+    background-color: #2563eb;
+}
+
+.border-math-blue {
+    border-color: #2563eb;
+}
+
+.text-math-blue {
+    color: #2563eb;
+}
+
+.hover\:text-math-blue:hover {
+    color: #2563eb;
+}
+
+/* Smooth transitions */
+a, button {
+    transition: all 0.2s ease;
+}
+
+/* Progress bar animations */
+.bg-math-blue {
+    transition: width 0.5s ease-out;
+}
+
+/* Card hover effects */
+.hover\:border-blue-100:hover {
+    border-color: #dbeafe;
+}
+
+.hover\:bg-white:hover {
+    background-color: #ffffff;
+}
+
+/* Text color transitions */
+.group:hover .group-hover\:text-blue-600 {
+    color: #2563eb;
+}

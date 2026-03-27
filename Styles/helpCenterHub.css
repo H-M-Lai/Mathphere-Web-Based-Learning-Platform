@@ -1,0 +1,14 @@
+﻿:root {
+    --math-blue: #2563eb;
+    --math-dark: #1e3a8a;
+}
+
+/* (Optional) slightly smoother icon buttons */
+[data-hc-card="1"] button {
+    border-radius: 0.75rem;
+}
+
+/* Make the search bar feel like your screenshot */
+#hcSearch::placeholder {
+    color: rgba(148, 163, 184, 1);
+}

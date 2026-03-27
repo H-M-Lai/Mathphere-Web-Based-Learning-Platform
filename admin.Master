@@ -1,0 +1,297 @@
+<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Admin.master.cs" Inherits="MathSphere.Admin" %>
+
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head runat="server">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><asp:ContentPlaceHolder ID="TitleContent" runat="server">MathSphere Admin</asp:ContentPlaceHolder></title>
+
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#f9d006",
+                        "background-light": "#f8f8f5",
+                        "math-blue": "#2563eb",
+                        "math-green": "#84cc16",
+                        "math-dark-blue": "#1e3a8a",
+                    },
+                    fontFamily: { "display": ["Space Grotesk", "sans-serif"] },
+                    borderRadius: {
+                        "DEFAULT": "1rem",
+                        "lg": "2rem",
+                        "xl": "3rem",
+                        "full": "9999px"
+                    }
+                },
+            },
+        }
+    </script>
+
+    <%-- Shared shell styling --%>
+    <style type="text/tailwindcss">
+        @layer base {
+            body {
+                @apply bg-background-light font-display text-math-dark-blue;
+                background-image:
+                    linear-gradient(rgba(0,0,0,0.03) 1px, transparent 1px),
+                    linear-gradient(90deg, rgba(0,0,0,0.03) 1px, transparent 1px);
+                background-size: 40px 40px;
+            }
+        }
+
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .fill-icon                  { font-variation-settings: 'FILL' 1; }
+
+        /* -- Floating math icons — identical to Student.master -- */
+        @keyframes floaty {
+            0%, 100% { transform: translate3d(0,0,0) rotate(var(--r)); }
+            50%       { transform: translate3d(var(--x), var(--y), 0) rotate(var(--r)); }
+        }
+        .bg-float { animation: floaty var(--d,18s) ease-in-out infinite; will-change: transform; }
+        @media (prefers-reduced-motion: reduce) { .bg-float { animation: none !important; } }
+        /* -- Scrollbar — matches Student.master -- */
+        ::-webkit-scrollbar       { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: #f1f5f9; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+        body.app-modal-active form#adminMasterForm > aside,
+        body.app-modal-active form#adminMasterForm > .flex-1 > main,
+        body.app-modal-active form#adminMasterForm > .flex-1 > footer {
+            position: relative !important;
+            z-index: 0 !important;
+            pointer-events: none !important;
+            opacity: 0.28 !important;
+            filter: blur(14px) saturate(0.82) !important;
+            transform: none !important;
+            transition: opacity .18s ease, filter .18s ease, z-index .18s ease;
+        }
+    </style>
+
+    <asp:ContentPlaceHolder ID="HeadContent" runat="server" />
+</head>
+
+<body class="min-h-screen flex">
+<form id="adminMasterForm" runat="server" class="w-full min-h-screen flex">
+
+    <!-- FLOATING BACKGROUND ICONS -->
+    <div class="fixed inset-0 pointer-events-none overflow-hidden opacity-[0.05] -z-10">
+        <span class="material-symbols-outlined absolute text-[140px] top-32 left-[6%] text-primary bg-float"
+              style="--r:17deg;--x:18px;--y:-12px;--d:22s;">add</span>
+        <span class="material-symbols-outlined absolute text-[160px] top-96 right-[10%] text-primary bg-float"
+              style="--r:-23deg;--x:-14px;--y:16px;--d:26s;">percent</span>
+        <span class="material-symbols-outlined absolute text-[150px] bottom-72 left-[14%] text-primary bg-float"
+              style="--r:41deg;--x:12px;--y:10px;--d:24s;">equal</span>
+        <span class="material-symbols-outlined absolute text-[170px] bottom-24 right-[12%] text-primary bg-float"
+              style="--r:-31deg;--x:-16px;--y:-10px;--d:28s;">close</span>
+        <span class="material-symbols-outlined absolute text-[130px] top-1/3 right-1/4 text-primary bg-float"
+              style="--r:9deg;--x:10px;--y:-14px;--d:20s;">function</span>
+    </div>
+
+    <!-- LEFT SIDEBAR -->
+    <aside class="w-[300px] h-screen sticky top-0 flex flex-col z-50 flex-shrink-0 p-4 lg:p-5">
+        <div class="h-full bg-white/90 backdrop-blur-md border border-white/70 rounded-[2rem] shadow-[0_20px_48px_rgba(30,58,138,0.08)] flex flex-col">
+        <div class="p-8">
+
+            <!-- Brand — same logo image as Student.master -->
+            <a href="adminDashboard.aspx" class="flex items-center gap-3 mb-12 no-underline">
+                <img src="<%= ResolveUrl("~/Image/white themed MathSphere logo transparent 2.png") %>"
+                     class="h-10 w-auto object-contain shrink-0" alt="MathSphere Logo" />
+                <div class="flex flex-col">
+                    <span class="text-math-dark-blue text-xl font-extrabold tracking-tight leading-none uppercase">MATHSPHERE</span>
+                    <span class="text-[10px] font-black uppercase text-gray-400 tracking-widest leading-none mt-1">Admin Control</span>
+                </div>
+            </a>
+
+            <!-- Nav links — active class set by Admin.master.cs -->
+            <nav class="flex flex-col gap-2.5">
+                <a id="navDashboard" runat="server" href="~/adminDashboard.aspx"
+                   class="flex items-center gap-3 px-4 py-3.5 text-gray-500 hover:bg-gray-50 hover:text-math-blue rounded-2xl transition-all group text-sm font-black uppercase tracking-wide">
+                    <span class="material-symbols-outlined text-xl group-hover:text-math-blue fill-icon">dashboard</span>
+                    <span>Dashboard</span>
+                </a>
+                <a id="navUserMgmt" runat="server" href="~/userManagement.aspx"
+                   class="flex items-center gap-3 px-4 py-3.5 text-gray-500 hover:bg-gray-50 hover:text-math-blue rounded-2xl transition-all group text-sm font-black uppercase tracking-wide">
+                    <span class="material-symbols-outlined text-xl group-hover:text-math-blue">manage_accounts</span>
+                    <span>User Management</span>
+                </a>
+                <a id="navSysSettings" runat="server" href="~/systemSetting.aspx"
+                   class="flex items-center gap-3 px-4 py-3.5 text-gray-500 hover:bg-gray-50 hover:text-math-blue rounded-2xl transition-all group text-sm font-black uppercase tracking-wide">
+                    <span class="material-symbols-outlined text-xl group-hover:text-math-blue">settings</span>
+                    <span>System Settings</span>
+                </a>
+                <a id="navForum" runat="server" href="~/forumModeration.aspx"
+                   class="flex items-center gap-3 px-4 py-3.5 text-gray-500 hover:bg-gray-50 hover:text-math-blue rounded-2xl transition-all group text-sm font-black uppercase tracking-wide">
+                    <span class="material-symbols-outlined text-xl group-hover:text-math-blue">forum</span>
+                    <span>Forum Moderation</span>
+                </a>
+                <a id="navHelp" runat="server" href="~/helpCenterHub.aspx"
+                   class="flex items-center gap-3 px-4 py-3.5 text-gray-500 hover:bg-gray-50 hover:text-math-blue rounded-2xl transition-all group text-sm font-black uppercase tracking-wide">
+                    <span class="material-symbols-outlined text-xl group-hover:text-math-blue">help_center</span>
+                    <span>Help Center</span>
+                </a>
+            </nav>
+        </div>
+
+        <!-- Admin profile card -->
+            <div class="mt-auto p-6 border-t border-gray-100">
+
+            <!-- Logout button -->
+            <asp:LinkButton ID="btnLogout" runat="server" OnClick="btnLogout_Click"
+                CssClass="w-full flex items-center justify-center gap-2 px-4 py-2.5 mb-4
+                          bg-red-50 hover:bg-red-500 text-red-500 hover:text-white
+                          rounded-xl border-2 border-red-100 hover:border-red-500
+                          transition-all text-xs font-black uppercase tracking-wider group">
+                <span class="material-symbols-outlined text-base group-hover:rotate-12 transition-transform">logout</span>
+                <span>Log Out</span>
+            </asp:LinkButton>
+            <div class="bg-gray-50/80 flex items-center gap-3 p-3 rounded-2xl border border-gray-100 shadow-sm">
+                <div class="size-10 rounded-full border-2 border-primary overflow-hidden bg-yellow-100 flex-shrink-0">
+                    <asp:Image ID="imgAdminAvatar" runat="server"
+                        CssClass="w-full h-full object-cover"
+                        AlternateText="Admin Avatar"
+                        ImageUrl="~/Image/default-avatar.png" />
+                </div>
+                <div class="flex flex-col min-w-0">
+                    <div class="text-sm font-black text-math-dark-blue leading-none truncate">
+                        <asp:Literal ID="litAdminUsername" runat="server" Text="Admin" />
+                    </div>
+                    <div class="text-[10px] font-bold text-gray-400 uppercase tracking-[0.18em] mt-1">Admin Console</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <div class="flex-1 flex flex-col min-w-0">
+
+        <main class="flex-1 px-6 lg:px-8 py-8 md:py-10">
+            <asp:ContentPlaceHolder ID="MainContent" runat="server" />
+        </main>
+
+        <!-- FOOTER -->
+        <footer class="px-6 lg:px-8 pb-10">
+            <div class="max-w-[1440px] mx-auto w-full rounded-[2rem] border border-white/70 bg-white/90 px-6 py-8 shadow-[0_16px_40px_rgba(30,58,138,0.06)] backdrop-blur-md flex flex-col md:flex-row justify-between items-center gap-6">
+                <div class="flex flex-col gap-2">
+                    <div class="flex items-center gap-3">
+                        <img src="<%= ResolveUrl("~/Image/white themed MathSphere logo transparent 2.png") %>"
+                             class="h-8 w-auto object-contain" alt="MathSphere Logo" />
+                        <span class="font-extrabold text-math-dark-blue tracking-tight text-lg uppercase">MATHSPHERE</span>
+                        <span class="text-xs font-bold text-gray-400 border-l border-gray-200 pl-3">Admin Panel</span>
+                    </div>
+                    <p class="text-sm font-bold text-gray-400">Operational tools for managing users, settings, and platform health.</p>
+                </div>
+                <div class="flex gap-8">
+                    <a class="text-sm font-bold text-gray-400 hover:text-math-blue transition-colors" href="SystemDocs.aspx">System Docs</a>
+                    <a class="text-sm font-bold text-gray-400 hover:text-math-blue transition-colors" href="ApiReference.aspx">API Reference</a>
+                    <a class="text-sm font-bold text-gray-400 hover:text-math-blue transition-colors" href="AdminSupport.aspx">Support</a>
+                </div>
+                <p class="text-xs font-bold text-gray-300">  2026 MathSphere. Admin workspace.</p>
+            </div>
+        </footer>
+
+    </div>
+
+</form>
+<script>
+    (function () {
+        function isVisible(el) {
+            if (!el || !el.isConnected) return false;
+            var style = window.getComputedStyle(el);
+            if (style.display === 'none' || style.visibility === 'hidden') return false;
+            if (parseFloat(style.opacity || '1') === 0) return false;
+            if (style.pointerEvents === 'none') return false;
+            if (el.hasAttribute('hidden') || el.getAttribute('aria-hidden') === 'true') return false;
+            var rect = el.getBoundingClientRect();
+            return rect.width > 0 && rect.height > 0;
+        }
+
+        function isModalCandidate(el) {
+            if (!isVisible(el)) return false;
+
+            var style = window.getComputedStyle(el);
+            if (style.position !== 'fixed' && style.position !== 'absolute') return false;
+
+            var id = (el.id || '').toLowerCase();
+            var cls = (typeof el.className === 'string' ? el.className : '').toLowerCase();
+            var text = id + ' ' + cls;
+            if (!/(modal|dialog|backdrop|overlay)/.test(text)) return false;
+
+            var z = parseInt(style.zIndex, 10);
+            if (!Number.isNaN(z) && z < 40) return false;
+
+            var rect = el.getBoundingClientRect();
+            var coversViewport = rect.width >= window.innerWidth * 0.45 && rect.height >= window.innerHeight * 0.45;
+            if (!coversViewport) return false;
+
+            return true;
+        }
+
+        function updateAppModalState() {
+            var nodes = document.querySelectorAll('body *');
+            var active = false;
+
+            for (var i = 0; i < nodes.length; i++) {
+                if (isModalCandidate(nodes[i])) {
+                    active = true;
+                    break;
+                }
+            }
+
+            document.body.classList.toggle('app-modal-active', active);
+        }
+
+        var queued = false;
+        function queueUpdate() {
+            if (queued) return;
+            queued = true;
+            Promise.resolve().then(function () {
+                queued = false;
+                updateAppModalState();
+            });
+        }
+
+        function initObserver() {
+            if (!document.body) return;
+            var observer = new MutationObserver(queueUpdate);
+            observer.observe(document.body, {
+                subtree: true,
+                childList: true,
+                attributes: true,
+                attributeFilter: ['class', 'style', 'hidden', 'aria-hidden']
+            });
+            updateAppModalState();
+        }
+
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initObserver);
+        } else {
+            initObserver();
+        }
+
+        window.addEventListener('load', updateAppModalState);
+        window.addEventListener('resize', queueUpdate);
+    })();
+</script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,337 @@
+/* -- Base -- */
+body {
+    font-family: 'Space Grotesk', sans-serif;
+    background-color: #f8f8f5;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(0, 0, 0, 0.03) 1px, transparent 1px);
+    background-size: 30px 30px;
+    background-attachment: fixed;
+    color: #1e3a8a;
+}
+
+/* -- Material icons -- */
+.material-symbols-outlined {
+    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+}
+
+.fill-icon {
+    font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+}
+
+/* -- Modal overlay -- */
+.um-modal-overlay {
+    background-color: rgba(30, 58, 138, 0.4);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+}
+
+/* -- Form inputs shared across modals -- */
+.um-input {
+    width: 100%;
+    padding: 0.75rem 1.25rem;
+    background: #f9fafb;
+    border: 2px solid #f3f4f6;
+    border-radius: 1rem;
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: #1e3a8a;
+    transition: border-color 0.2s;
+    outline: none;
+}
+
+    .um-input:focus {
+        border-color: #2563eb;
+        box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.08);
+    }
+
+/* -- Form labels -- */
+.um-label {
+    display: block;
+    font-size: 10px;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: #9ca3af;
+    margin-left: 0.5rem;
+    margin-bottom: 0.25rem;
+}
+
+/* -- Toggle switch -- */
+.toggle-checkbox {
+    display: none;
+}
+
+.toggle-label {
+    transition: background 0.3s ease;
+}
+
+.toggle-dot {
+    transition: transform 0.3s ease;
+}
+
+.toggle-checkbox:checked ~ .toggle-dot,
+.translate-x-5 {
+    transform: translateX(1.25rem);
+}
+
+/* -- Toast notification -- */
+.um-toast {
+    position: fixed;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%) translateY(6rem);
+    background: #1e3a8a;
+    color: white;
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 900;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding: 0.85rem 2rem;
+    border-radius: 9999px;
+    box-shadow: 0 8px 32px rgba(37, 99, 235, 0.25);
+    transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s;
+    opacity: 0;
+    pointer-events: none;
+    z-index: 9999;
+    white-space: nowrap;
+}
+
+    .um-toast.visible {
+        transform: translateX(-50%) translateY(0);
+        opacity: 1;
+    }
+
+/* -- Scrollbar -- */
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #e2e8f0;
+    border-radius: 10px;
+}
+
+    ::-webkit-scrollbar-thumb:hover {
+        background: #cbd5e1;
+    }
+
+/* -- Table hover -- */
+tbody tr {
+    transition: background 0.15s ease;
+}
+
+/* Sidebar active nav state */
+aside nav a.bg-math-blue {
+    position: relative;
+}
+
+/* -- Stat card hover -- */
+.rounded-3xl {
+    transition: border-color 0.2s, transform 0.2s;
+}
+
+    .rounded-3xl:hover {
+        transform: translateY(-2px);
+    }
+
+/* -- Add New User button 3D press -- */
+.shadow-\[0_6px_0_0_\#d4af37\]:active {
+    transform: translateY(6px);
+    box-shadow: none !important;
+}
+
+/* -- Accessibility focus -- */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible {
+    outline: 2px solid #2563eb;
+    outline-offset: 2px;
+}
+
+/* -- Avatar fallback (no image) -- */
+.size-12.flex {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* -- Responsive: collapse sidebar on small screens -- */
+@media (max-width: 768px) {
+    aside {
+        position: fixed;
+        left: -18rem;
+        transition: left 0.3s ease;
+        z-index: 200;
+    }
+
+        aside.mobile-open {
+            left: 0;
+        }
+
+    main {
+        padding: 1.5rem;
+    }
+}
+
+/* -- Animation: fade in rows -- */
+@keyframes fadeInRow {
+    from {
+        opacity: 0;
+        transform: translateX(-8px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+tbody tr {
+    animation: fadeInRow 0.3s ease-out both;
+}
+
+    tbody tr:nth-child(1) {
+        animation-delay: 0.04s;
+    }
+
+    tbody tr:nth-child(2) {
+        animation-delay: 0.08s;
+    }
+
+    tbody tr:nth-child(3) {
+        animation-delay: 0.12s;
+    }
+
+    tbody tr:nth-child(4) {
+        animation-delay: 0.16s;
+    }
+
+    tbody tr:nth-child(5) {
+        animation-delay: 0.20s;
+    }
+
+    tbody tr:nth-child(6) {
+        animation-delay: 0.24s;
+    }
+
+    tbody tr:nth-child(7) {
+        animation-delay: 0.28s;
+    }
+
+    tbody tr:nth-child(8) {
+        animation-delay: 0.32s;
+    }
+
+/* -- Page entrance -- */
+main {
+    animation: fadeUp 0.5s ease-out both;
+}
+
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(16px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* -- Disable User Modal -------------------------------------------------- */
+.um-disable-overlay {
+    background-color: rgba(15, 23, 42, 0.60);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+}
+
+.dm-card {
+    animation: dmCardIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+@keyframes dmCardIn {
+    from {
+        opacity: 0;
+        transform: scale(0.93) translateY(16px);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+/* Confirm Disable button — red solid button matching first image */
+.dm-confirm-btn {
+    flex: 1;
+    padding: 1.125rem 2.5rem;
+    background: #ef4444;
+    color: #ffffff;
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 900;
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border: none !important;
+    border-radius: 0.75rem;
+    cursor: pointer;
+    box-shadow: none;
+    transition: background 0.2s, transform 0.1s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.625rem;
+}
+
+    .dm-confirm-btn:hover {
+        background: #dc2626;
+    }
+
+    .dm-confirm-btn:active {
+        transform: scale(0.98);
+    }
+
+    /* Icon before text */
+    .dm-confirm-btn::before {
+        content: 'block';
+        font-family: 'Material Symbols Outlined';
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 20;
+        font-size: 20px;
+    }
+
+/* Cancel button - outlined style matching first image */
+.dm-cancel-btn {
+    flex: 1;
+    padding: 1.125rem 2.5rem;
+    background: transparent;
+    color: #64748b;
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border: 2px solid #e2e8f0 !important;
+    border-radius: 0.75rem;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+    .dm-cancel-btn:hover {
+        background: #f8fafc;
+        border-color: #cbd5e1 !important;
+        color: #475569;
+    }
+
+    .dm-cancel-btn:active {
+        transform: scale(0.98);
+    }
+
+

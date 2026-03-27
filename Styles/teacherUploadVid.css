@@ -1,0 +1,253 @@
+﻿body {
+    font-family: 'Space Grotesk', sans-serif;
+}
+
+.material-symbols-outlined {
+    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    font-size: 20px;
+}
+
+
+.modal-container {
+    height: 100vh;
+    border-radius: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.modal-header {
+    background: linear-gradient(135deg, #2D5CFE 0%, #1a3fd4 100%);
+}
+
+
+.modal-body::-webkit-scrollbar {
+    width: 6px;
+}
+
+.modal-body::-webkit-scrollbar-track {
+    background: #f8fafc;
+    border-radius: 10px;
+}
+
+.modal-body::-webkit-scrollbar-thumb {
+    background: #e2e8f0;
+    border-radius: 10px;
+}
+
+    .modal-body::-webkit-scrollbar-thumb:hover {
+        background: #cbd5e1;
+    }
+
+.tab-switcher {
+    background: #f1f5f9;
+}
+
+.tab-btn {
+    cursor: pointer;
+    user-select: none;
+}
+
+.tab-active {
+    background: #2D5CFE !important;
+    color: white !important;
+    box-shadow: 0 2px 8px rgba(45, 92, 254, 0.3);
+}
+
+    .tab-active .material-icons-round {
+        color: white !important;
+    }
+
+/* =============================================
+   URL INPUT
+   ============================================= */
+.url-input:focus {
+    border-color: #2D5CFE;
+    box-shadow: 0 0 0 3px rgba(45, 92, 254, 0.08);
+}
+
+/* =============================================
+   VIDEO PREVIEW BOX
+   ============================================= */
+.video-preview-box {
+    background: #f8fafc;
+    transition: all 0.2s ease;
+}
+
+    .video-preview-box:has(iframe:not(.hidden)) {
+        border-style: solid;
+        border-color: #2D5CFE;
+    }
+
+/* =============================================
+   UPLOAD DROP ZONE
+   ============================================= */
+.upload-dropzone {
+    transition: all 0.2s ease;
+    min-height: 220px;
+}
+
+    .upload-dropzone.dragover {
+        border-color: #2D5CFE !important;
+        background-color: rgba(45, 92, 254, 0.1) !important;
+        transform: scale(1.01);
+        box-shadow: 0 0 0 4px rgba(45, 92, 254, 0.15);
+    }
+
+/* Upload icon size override */
+.upload-icon-sym {
+    font-size: 2.5rem !important;
+    font-variation-settings: 'FILL' 1, 'wght' 600, 'GRAD' 0, 'opsz' 48;
+}
+
+/* Browse button 3D press */
+.browse-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transform: translateY(0);
+}
+
+    .browse-btn:active {
+        transform: translateY(4px);
+        box-shadow: none !important;
+    }
+
+/* =============================================
+   UPLOAD PROGRESS BAR
+   ============================================= */
+#progressBar {
+    background: linear-gradient(90deg, #2D5CFE, #5b81ff);
+    box-shadow: 0 0 8px rgba(45, 92, 254, 0.4);
+}
+
+/* =============================================
+   TOGGLE SWITCH
+   ============================================= */
+.toggle-track {
+    transition: background-color 0.2s ease;
+    position: relative;
+    display: inline-block;
+}
+
+.toggle-thumb {
+    transition: transform 0.2s ease;
+    position: absolute;
+    top: 4px;
+    left: 4px;
+    width: 16px;
+    height: 16px;
+    background: white;
+    border-radius: 9999px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+}
+
+/* =============================================
+   NOTES EDITOR TOOLBAR
+   ============================================= */
+.notes-editor {
+    transition: border-color 0.2s ease;
+}
+
+.toolbar-btn {
+    padding: 6px;
+    border-radius: 8px;
+    color: #64748b;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.15s ease, color 0.15s ease;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+}
+
+    .toolbar-btn:hover {
+        background: #f1f5f9;
+        color: #1e293b;
+    }
+
+.toolbar-btn-math {
+    color: #2D5CFE;
+    background: rgba(45, 92, 254, 0.08);
+}
+
+    .toolbar-btn-math:hover {
+        background: rgba(45, 92, 254, 0.15) !important;
+        color: #2D5CFE !important;
+    }
+
+.toolbar-sep {
+    width: 1px;
+    height: 20px;
+    background: #e2e8f0;
+    margin: 0 2px;
+    flex-shrink: 0;
+}
+
+/* =============================================
+   ATTACH BUTTON
+   ============================================= */
+.attach-btn {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    letter-spacing: 0.05em;
+}
+
+    .attach-btn::before {
+        content: '\e157'; /* Material Icons: add_link */
+        font-family: 'Material Icons Round';
+        font-size: 1.2rem;
+        margin-right: 8px;
+        line-height: 1;
+    }
+
+    .attach-btn:hover {
+        filter: brightness(1.04);
+    }
+
+/* =============================================
+   INPUT FOCUS OVERRIDE
+   ============================================= */
+input:focus,
+textarea:focus,
+button:focus {
+    outline: none;
+}
+
+/* =============================================
+   DECORATIVE BG ELEMENTS
+   ============================================= */
+.deco-cross {
+    position: fixed;
+    top: 40px;
+    left: 40px;
+    opacity: 0.07;
+    pointer-events: none;
+    color: #2D5CFE;
+}
+
+.deco-circle {
+    position: fixed;
+    bottom: 40px;
+    right: 40px;
+    opacity: 0.07;
+    pointer-events: none;
+    color: #A5D610;
+}
+
+/* =============================================
+   RESPONSIVE TWEAKS
+   ============================================= */
+@media (max-width: 640px) {
+    .modal-container {
+        border-radius: 1.5rem 1.5rem 0 0;
+        max-height: 95vh;
+        margin-top: auto;
+    }
+
+    .modal-backdrop {
+        align-items: flex-end;
+        padding: 0;
+    }
+}

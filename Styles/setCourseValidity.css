@@ -1,0 +1,42 @@
+﻿@layer base {
+    body {
+        background-image: linear-gradient(rgba(0, 0, 0, 0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(0, 0, 0, 0.05) 1px, transparent 1px);
+        background-size: 30px 30px;
+    }
+}
+
+.material-symbols-outlined {
+    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+}
+
+.fill-icon {
+    font-variation-settings: 'FILL' 1;
+}
+
+.tab-active-blue {
+    border-color: #2563eb;
+    background-color: white;
+    color: #2563eb;
+    box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+    transform: translateY(-4px);
+}
+
+.tab-inactive {
+    border-color: transparent;
+    background-color: rgba(255, 255, 255, 0.5);
+    color: rgb(156 163 175);
+    transition: all 0.3s;
+}
+
+    .tab-inactive:hover {
+        background-color: rgba(255, 255, 255, 0.8);
+        transform: translateY(-2px);
+    }
+
+.custom-toggle:checked + .toggle-bg {
+    background-color: #84cc16;
+}
+
+    .custom-toggle:checked + .toggle-bg .toggle-dot {
+        transform: translateX(1.5rem);
+    }

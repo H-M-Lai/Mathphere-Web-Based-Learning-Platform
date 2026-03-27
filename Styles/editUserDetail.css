@@ -1,0 +1,259 @@
+﻿body {
+    font-family: 'Space Grotesk', sans-serif;
+    background-color: #f8f8f5;
+    background-image: linear-gradient(rgba(0,0,0,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(0,0,0,0.03) 1px, transparent 1px);
+    background-size: 30px 30px;
+    color: #1e3a8a;
+}
+
+.material-symbols-outlined {
+    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+}
+
+.fill-icon {
+    font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+}
+
+/* ── Modal overlay — blurred blue tint matching reference --%>  ── */
+.eud-modal-overlay {
+    background-color: rgba(30, 58, 138, 0.60);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+}
+
+/* ── Card entrance animation ── */
+.eud-card {
+    animation: cardIn 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+@keyframes cardIn {
+    from {
+        opacity: 0;
+        transform: scale(0.92) translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+/* ── Gear spin on load ── */
+.eud-gear {
+    display: block;
+    animation: gearIn 0.9s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+    transform-origin: center;
+}
+
+@keyframes gearIn {
+    from {
+        transform: rotate(-60deg) scale(0.5);
+        opacity: 0;
+    }
+
+    to {
+        transform: rotate(0deg) scale(1);
+        opacity: 1;
+    }
+}
+
+/* ── Edit badge bounce ── */
+.eud-edit-badge {
+    display: block;
+    animation: badgeIn 0.5s 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+@keyframes badgeIn {
+    from {
+        transform: scale(0) rotate(-15deg);
+        opacity: 0;
+    }
+
+    to {
+        transform: scale(1) rotate(0deg);
+        opacity: 1;
+    }
+}
+
+/* ── Form labels ── */
+.eud-label {
+    display: block;
+    font-size: 11px;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: rgba(30, 58, 138, 0.6);
+    margin-left: 0.25rem;
+    margin-bottom: 0.5rem;
+}
+
+/* ── Inputs ── */
+.eud-input {
+    width: 100%;
+    padding: 1rem 1.25rem;
+    background: #f9fafb;
+    border: 4px solid #f9fafb;
+    border-radius: 1rem;
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: #1e3a8a;
+    transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
+    outline: none;
+    -webkit-appearance: none;
+    appearance: none;
+}
+
+    .eud-input:focus {
+        border-color: #2563eb;
+        background: #ffffff;
+        box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.08);
+    }
+
+/* ── Save button — yellow 3D press ── */
+.eud-save-btn {
+    flex: 2;
+    background: #f9d006;
+    color: #1e3a8a;
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 900;
+    font-size: 1.1rem;
+    text-transform: uppercase;
+    letter-spacing: -0.02em;
+    border: none !important;
+    border-radius: 1rem;
+    padding: 1.25rem 2rem;
+    cursor: pointer;
+    box-shadow: 0 8px 0 0 #d4af37;
+    transition: background 0.15s, box-shadow 0.1s, transform 0.1s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+}
+
+    .eud-save-btn:hover {
+        background: #fbbf24;
+    }
+
+    .eud-save-btn:active {
+        box-shadow: none;
+        transform: translateY(8px);
+    }
+
+/* ── Close button smooth rotate ── */
+.eud-close-btn {
+    transition: background 0.2s, color 0.2s, transform 0.3s ease;
+}
+
+    .eud-close-btn:hover {
+        transform: rotate(90deg);
+    }
+
+/* ── Toggle ── */
+.toggle-checkbox {
+    display: none;
+}
+
+.toggle-label {
+    transition: background 0.3s ease;
+}
+
+.toggle-dot {
+    transition: transform 0.3s ease;
+}
+
+/* ── Toast ── */
+.eud-toast {
+    position: fixed;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%) translateY(5rem);
+    background: #1e3a8a;
+    color: #fff;
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 900;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding: 0.85rem 2rem;
+    border-radius: 9999px;
+    box-shadow: 0 8px 32px rgba(37, 99, 235, 0.25);
+    transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s;
+    opacity: 0;
+    pointer-events: none;
+    z-index: 9999;
+    white-space: nowrap;
+}
+
+    .eud-toast.visible {
+        transform: translateX(-50%) translateY(0);
+        opacity: 1;
+    }
+
+/* ── Sidebar active indicator ── */
+aside nav a.bg-math-blue {
+    position: relative;
+}
+
+    aside nav a.bg-math-blue::before {
+        content: '';
+        position: absolute;
+        left: -1rem;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 4px;
+        height: 60%;
+        background: #f9d006;
+        border-radius: 0 4px 4px 0;
+    }
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar {
+    width: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #e2e8f0;
+    border-radius: 10px;
+}
+
+/* ── Focus rings ── */
+a:focus-visible, button:focus-visible,
+input:focus-visible, select:focus-visible {
+    outline: 2px solid #2563eb;
+    outline-offset: 2px;
+}
+
+/* ── Left pane symbol float ── */
+@keyframes floatSym {
+    0%, 100% {
+        transform: translateY(0) rotate( 12deg);
+    }
+
+    50% {
+        transform: translateY(-12px) rotate(18deg);
+    }
+}
+
+@keyframes floatSymR {
+    0%, 100% {
+        transform: translateY(0) rotate(-12deg);
+    }
+
+    50% {
+        transform: translateY(-10px) rotate(-18deg);
+    }
+}
+
+.eud-card .w-1\/3 .absolute .material-symbols-outlined:first-child {
+    animation: floatSym 5s ease-in-out infinite;
+}
+
+.eud-card .w-1\/3 .absolute .material-symbols-outlined:last-child {
+    animation: floatSymR 5s 2.5s ease-in-out infinite;
+}

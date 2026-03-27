@@ -1,0 +1,247 @@
+@layer base {
+    body {
+        background-image: linear-gradient(rgba(0, 0, 0, 0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(0, 0, 0, 0.05) 1px, transparent 1px);
+        background-size: 30px 30px;
+    }
+}
+
+.material-symbols-outlined {
+    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+}
+
+.fill-icon {
+    font-variation-settings: 'FILL' 1;
+}
+
+
+.tab-active-green {
+    border-color: #84cc16;
+    background-color: rgba(255,255,255,0.98);
+    color: #65a30d;
+    box-shadow: 0 14px 32px rgba(15,23,42,0.08);
+}
+
+.tab-inactive {
+    border-color: rgba(226,232,240,0.85);
+    background-color: rgba(255,255,255,0.82);
+    color: rgb(100 116 139);
+    transition: all 0.2s ease;
+}
+
+    .tab-inactive:hover {
+        background-color: rgba(255,255,255,0.96);
+        transform: translateY(-1px);
+        box-shadow: 0 10px 24px rgba(15,23,42,0.05);
+    }
+
+.drag-handle {
+    cursor: grab;
+    touch-action: none;
+    user-select: none;
+}
+
+    .drag-handle:active {
+        cursor: grabbing;
+    }
+
+
+.library-item {
+    touch-action: none;
+    user-select: none;
+    transition: all 0.2s ease;
+}
+
+    .library-item:hover {
+        transform: translateX(4px) scale(1.01);
+        box-shadow: 0 4px 16px rgba(132, 204, 22, 0.15);
+        border-color: #84cc16;
+    }
+
+    .library-item:active {
+        transform: scale(0.98);
+        opacity: 0.8;
+    }
+
+
+.module-block-item {
+    display: block !important;
+    width: 100%;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+}
+
+
+.dragging-block {
+    opacity: 0.35;
+    transform: scale(0.98);
+    box-shadow: none !important;
+}
+
+
+.module-block-item.insert-before {
+    border-top: 3px solid #84cc16 !important;
+    margin-top: -3px;
+    padding-top: 3px;
+    position: relative;
+}
+
+    .module-block-item.insert-before::before {
+        content: '';
+        display: block;
+        height: 3px;
+        background: linear-gradient(90deg, #84cc16, transparent);
+        border-radius: 99px;
+        position: absolute;
+        top: -4px;
+        left: 0;
+        right: 0;
+        animation: insertPulse 0.8s infinite alternate;
+    }
+
+
+.module-block-item.insert-after {
+    border-bottom: 3px solid #84cc16 !important;
+    margin-bottom: -3px;
+    padding-bottom: 3px;
+    position: relative;
+}
+
+    .module-block-item.insert-after::after {
+        content: '';
+        display: block;
+        height: 3px;
+        background: linear-gradient(90deg, #84cc16, transparent);
+        border-radius: 99px;
+        position: absolute;
+        bottom: -4px;
+        left: 0;
+        right: 0;
+        animation: insertPulse 0.8s infinite alternate;
+    }
+
+@keyframes insertPulse {
+    from {
+        opacity: 0.6;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+
+.drop-zone {
+    transition: all 0.25s ease;
+    min-height: 120px;
+}
+
+.drop-zone-active {
+    border-color: #84cc16 !important;
+    background-color: rgba(132, 204, 22, 0.06) !important;
+    transform: scale(1.01);
+    box-shadow: 0 0 0 4px rgba(132, 204, 22, 0.15);
+}
+
+    .drop-zone-active .material-symbols-outlined {
+        color: #84cc16 !important;
+    }
+
+    .drop-zone-active p {
+        color: #65a30d !important;
+    }
+
+
+.drag-ghost {
+    pointer-events: none;
+    min-width: 220px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.18), 0 0 0 3px rgba(132, 204, 22, 0.3);
+    transform: rotate(-1.5deg);
+    border-color: #84cc16;
+    animation: ghostAppear 0.15s ease-out;
+}
+
+@keyframes ghostAppear {
+    from {
+        opacity: 0;
+        transform: scale(0.9) rotate(-1.5deg);
+    }
+
+    to {
+        opacity: 0.9;
+        transform: scale(1) rotate(-1.5deg);
+    }
+}
+
+
+aside::-webkit-scrollbar {
+    width: 8px;
+}
+
+aside::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+}
+
+aside::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 10px;
+}
+
+    aside::-webkit-scrollbar-thumb:hover {
+        background: #94a3b8;
+    }
+
+.group {
+    transition: all 0.2s ease-in-out;
+}
+
+
+input:focus,
+textarea:focus,
+button:focus {
+    outline: none;
+}
+
+
+input[type="checkbox"]:checked + .toggle-bg {
+    background-color: #84cc16;
+}
+
+    input[type="checkbox"]:checked + .toggle-bg .toggle-dot {
+        transform: translateX(1rem);
+    }
+
+
+body.is-dragging {
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+
+.modal-enter {
+    opacity: 0;
+    transform: scale(0.94) translateY(12px);
+    transition: opacity 0.22s ease, transform 0.22s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.modal-visible {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+}
+
+
+.config-scroll::-webkit-scrollbar {
+    width: 6px;
+}
+
+.config-scroll::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.config-scroll::-webkit-scrollbar-thumb {
+    background: #e2e8f0;
+    border-radius: 99px;
+}
+
+    .config-scroll::-webkit-scrollbar-thumb:hover {
+        background: #cbd5e1;
+    }

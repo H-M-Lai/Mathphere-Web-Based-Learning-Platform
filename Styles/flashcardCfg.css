@@ -1,0 +1,155 @@
+﻿body {
+    font-family: 'Space Grotesk', sans-serif;
+}
+
+/* Material Symbols */
+.material-symbols-outlined {
+    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+}
+
+
+.modal-window {
+    height: 100vh !important;
+    max-height: 100vh !important;
+    border-radius: 0 !important;
+}
+
+
+.custom-scrollbar::-webkit-scrollbar {
+    width: 6px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+    background: #e2e8f0;
+    border-radius: 10px;
+}
+
+    .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+        background: #cbd5e1;
+    }
+
+
+.toggle-track {
+    position: relative;
+    display: inline-block;
+    transition: background-color 0.2s ease;
+}
+
+.toggle-thumb {
+    position: absolute;
+    top: 4px;
+    left: 4px;
+    width: 24px;
+    height: 24px;
+    background: white;
+    border-radius: 9999px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+    transition: transform 0.2s ease;
+}
+
+
+.set-title-input:focus {
+    border-color: #2563eb;
+    background: white;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.08);
+    outline: none;
+}
+
+
+.flashcard-item {
+    transition: box-shadow 0.2s ease, transform 0.15s ease, opacity 0.18s ease;
+}
+
+    .flashcard-item:hover {
+        box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+    }
+
+
+.card-dragging {
+    opacity: 0.35 !important;
+    transform: scale(0.98) !important;
+    box-shadow: none !important;
+}
+
+
+.drop-above {
+    border-top: 3px solid #2563eb !important;
+    padding-top: calc(1.5rem + 3px);
+}
+
+
+.drop-below {
+    border-bottom: 3px solid #2563eb !important;
+    padding-bottom: calc(1.5rem + 3px);
+}
+
+
+.card-textarea {
+    background: #f9fafb;
+    border: 2px solid #f3f4f6;
+    font-weight: 500;
+    transition: border-color 0.15s ease, background 0.15s ease, box-shadow 0.15s ease;
+}
+
+    .card-textarea:focus {
+        border-color: #2563eb;
+        background: white;
+        box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.08);
+        outline: none;
+    }
+
+
+.delete-card-btn {
+    transition: background-color 0.15s ease, color 0.15s ease, transform 0.1s ease;
+}
+
+    .delete-card-btn:active {
+        transform: scale(0.92);
+    }
+
+
+.add-card-btn {
+    transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+    .add-card-btn:active {
+        transform: scale(0.99);
+    }
+
+
+.drag-handle {
+    cursor: grab;
+    touch-action: none;
+    user-select: none;
+}
+
+    .drag-handle:active {
+        cursor: grabbing;
+    }
+
+
+.save-btn {
+    cursor: pointer;
+    transition: transform 0.1s ease, box-shadow 0.1s ease;
+}
+
+    .save-btn:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 5px 0 0 #d4b105;
+    }
+
+    .save-btn:active {
+        transform: translateY(3px);
+        box-shadow: 0 1px 0 0 #d4b105;
+    }
+
+
+input:focus,
+textarea:focus,
+button:focus {
+    outline: none;
+}

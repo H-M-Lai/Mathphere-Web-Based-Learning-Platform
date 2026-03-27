@@ -1,0 +1,333 @@
+
+<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Teacher.master.cs" Inherits="MathSphere.Teacher" %>
+<!DOCTYPE html>
+<html lang="en">
+<head runat="server">
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title><asp:ContentPlaceHolder ID="TitleContent" runat="server">MathSphere — Teacher</asp:ContentPlaceHolder></title>
+
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary":            "#f9d006",
+                        "background-light":   "#f8f8f5",
+                        "math-blue":          "#2563eb",
+                        "math-green":         "#84cc16",
+                        "math-dark-blue":     "#1e3a8a",
+                    },
+                    fontFamily: { "display": ["Space Grotesk", "sans-serif"] },
+                    borderRadius: {
+                        "DEFAULT": "1rem",
+                        "lg":      "2rem",
+                        "xl":      "3rem",
+                        "full":    "9999px"
+                    }
+                },
+            },
+        }
+    </script>
+
+    <style>
+        /* -- Base -- */
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            color: #1e3a8a;
+            background-color: #f8f8f5;
+            background-image:
+                linear-gradient(rgba(0,0,0,0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0,0,0,0.03) 1px, transparent 1px);
+            background-size: 40px 40px;
+        }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .fill-icon                  { font-variation-settings: 'FILL' 1; }
+
+        /* -- Top-nav links -- */
+        .nav-link {
+            position: relative;
+            font-weight: 700;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: #9ca3af;
+            padding-bottom: 0.5rem;
+            transition: color 0.15s;
+            text-decoration: none;
+        }
+        .nav-link:hover  { color: #2563eb; }
+        .nav-link.active { color: #2563eb; }
+
+        /* -- Sliding underline indicator -- */
+        #navIndicator {
+            position: absolute;
+            bottom: 2px;
+            height: 4px;
+            background: #2563eb;
+            border-radius: 9999px;
+            transition: left 0.2s ease-out, width 0.2s ease-out;
+            pointer-events: none;
+        }
+
+        /* -- Floating math icons -- */
+        @keyframes floaty {
+            0%, 100% { transform: translate3d(0,0,0) rotate(var(--r)); }
+            50%       { transform: translate3d(var(--x), var(--y), 0) rotate(var(--r)); }
+        }
+        .bg-float { animation: floaty var(--d, 18s) ease-in-out infinite; will-change: transform; }
+        @media (prefers-reduced-motion: reduce) { .bg-float { animation: none !important; } }
+
+        /* -- Scrollbar -- */
+        ::-webkit-scrollbar       { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: #f1f5f9; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+        body.app-modal-active form#teacherMasterForm > header,
+        body.app-modal-active form#teacherMasterForm > footer {
+            position: relative !important; z-index: 0 !important; pointer-events: none !important; opacity: 1 !important; filter: none !important; transform: none !important; transition: z-index .18s ease;
+        }
+    </style>
+
+    <%-- Page-specific head content (CSS, extra styles) --%>
+    <asp:ContentPlaceHolder ID="HeadContent" runat="server" />
+</head>
+
+<body class="min-h-screen relative overflow-x-hidden">
+<form id="teacherMasterForm" runat="server" class="min-h-screen flex flex-col">
+
+    <%-- FLOATING BACKGROUND MATH ICONS --%>
+    <div class="fixed inset-0 pointer-events-none overflow-hidden opacity-[0.05] -z-10">
+        <span class="material-symbols-outlined absolute text-[140px] top-32 left-[6%] text-primary bg-float"
+              style="--r:17deg;--x:18px;--y:-12px;--d:22s;">add</span>
+        <span class="material-symbols-outlined absolute text-[160px] top-96 right-[10%] text-primary bg-float"
+              style="--r:-23deg;--x:-14px;--y:16px;--d:26s;">percent</span>
+        <span class="material-symbols-outlined absolute text-[150px] bottom-72 left-[14%] text-primary bg-float"
+              style="--r:41deg;--x:12px;--y:10px;--d:24s;">equal</span>
+        <span class="material-symbols-outlined absolute text-[170px] bottom-24 right-[12%] text-primary bg-float"
+              style="--r:-31deg;--x:-16px;--y:-10px;--d:28s;">close</span>
+        <span class="material-symbols-outlined absolute text-[130px] top-1/3 right-1/4 text-primary bg-float"
+              style="--r:9deg;--x:10px;--y:-14px;--d:20s;">function</span>
+    </div>
+
+    <%-- HEADER --%>
+    <header class="sticky top-0 z-50 px-6 lg:px-8 py-4">
+        <div class="max-w-[1440px] mx-auto flex items-center gap-6 rounded-[2rem] border border-white/70 bg-white/90 px-6 py-3 shadow-[0_16px_40px_rgba(30,58,138,0.08)] backdrop-blur-md">
+
+            <%-- Brand --%>
+            <a class="flex items-center gap-3" href="<%= ResolveUrl("~/teacherDashboard.aspx") %>">
+                <img src="<%= ResolveUrl("~/Image/white themed MathSphere logo transparent 2.png") %>"
+                     class="h-10 lg:h-12 w-auto object-contain" alt="MathSphere Logo" />
+                <span class="text-2xl lg:text-3xl font-extrabold tracking-tight uppercase text-math-dark-blue">
+                    MATHSPHERE
+                </span>
+            </a>
+
+            <%-- Nav with sliding underline --%>
+            <nav id="mainNav" class="relative flex items-center gap-8 ml-6 z-50">
+                <a href="<%= ResolveUrl("~/teacherDashboard.aspx") %>"
+                   class="nav-link" data-match="teacherDashboard">DASHBOARD</a>
+                <a href="<%= ResolveUrl("~/courselistDashboard.aspx") %>"
+                   class="nav-link" data-match="courselistDashboard">COURSE</a>
+                <a href="<%= ResolveUrl("~/studentEnroll.aspx") %>"
+                   class="nav-link" data-match="studentEnroll">STUDENT</a>
+                <a href="<%= ResolveUrl("~/teacherForum.aspx") %>"
+                   class="nav-link" data-match="teacherForum">FORUM</a>
+                <span id="navIndicator" style="width:0"></span>
+            </nav>
+
+            <%-- Right pill: role badge + name + avatar --%>
+            <div class="ml-auto flex items-center gap-3 rounded-full border border-gray-200 bg-white px-2 py-1.5 shadow-sm">
+
+                <div class="rounded-full border border-primary/40 bg-primary/20 px-4 py-2 text-math-dark-blue shadow-sm">
+                    <span class="font-black text-[11px] uppercase tracking-[0.18em]">Teacher Studio</span>
+                </div>
+
+                <div class="flex items-center gap-2 rounded-full bg-gray-50 px-3 py-2 border border-gray-100">
+                    <div class="size-6 bg-math-blue rounded-full flex items-center justify-center shadow-sm">
+                        <span class="material-symbols-outlined text-white text-xs fill-icon">school</span>
+                    </div>
+                    <span class="font-black text-sm text-math-dark-blue">
+                        <asp:Literal ID="litTeacherNameNav" runat="server" Text="Teacher" />
+                    </span>
+                </div>
+
+                <a href="<%= ResolveUrl("~/teacherProfile.aspx") %>"
+   class="block size-10 rounded-full border-2 border-primary/70 overflow-hidden bg-white shadow-sm hover:scale-105 transition-transform cursor-pointer"
+   aria-label="Go to teacher profile">
+    <asp:Image ID="imgTeacherAvatar" runat="server"
+        CssClass="w-full h-full object-cover bg-blue-100"
+        AlternateText="Teacher Profile"
+        ImageUrl="~/Image/default-avatar.png" />
+</a>
+            </div>
+        </div>
+    </header>
+
+    <%-- MAIN CONTENT --%>
+    <main class="flex-1 max-w-[1440px] mx-auto w-full px-6 lg:px-8 py-10 z-10">
+        <asp:ContentPlaceHolder ID="MainContent" runat="server" />
+    </main>
+
+    <%-- FOOTER --%>
+    <footer class="px-6 lg:px-8 pb-10 mt-14">
+        <div class="max-w-[1440px] mx-auto w-full rounded-[2rem] border border-white/70 bg-white/90 px-6 py-8 shadow-[0_16px_40px_rgba(30,58,138,0.06)] backdrop-blur-md flex flex-col md:flex-row justify-between items-center gap-6">
+
+            <div class="flex flex-col gap-3 text-center md:text-left">
+                <div class="flex items-center justify-center md:justify-start gap-3">
+                    <img src="<%= ResolveUrl("~/Image/white themed MathSphere logo transparent 2.png") %>"
+                         class="h-8 w-auto object-contain" alt="MathSphere Logo" />
+                    <span class="font-extrabold text-math-dark-blue tracking-tight text-lg uppercase">MATHSPHERE</span>
+                </div>
+                <p class="text-sm font-bold text-gray-400">Built for lesson planning, tracking progress, and supporting every class.</p>
+            </div>
+
+            <div class="flex gap-8">
+                <a class="text-sm font-black text-gray-500 hover:text-blue-600 transition-colors" href="TeacherSupport.aspx">Help Center</a>
+                <a class="text-sm font-black text-gray-500 hover:text-blue-600 transition-colors" href="TeacherPrivacy.aspx">Privacy Policy</a>
+                <a class="text-sm font-black text-gray-500 hover:text-blue-600 transition-colors" href="TeacherHandbook.aspx">Teacher Handbook</a>
+            </div>
+
+            <p class="text-xs font-bold text-gray-300 text-center md:text-right">
+                © 2026 MathSphere. Teacher workspace.
+            </p>
+        </div>
+    </footer>
+
+</form>
+
+<%-- -- MASTER SCRIPTS (nav indicator — runs on every teacher page) -- --%>
+<script>
+    (function () {
+        var nav       = document.getElementById('mainNav');
+        var indicator = document.getElementById('navIndicator');
+        if (!nav || !indicator) return;
+
+        // Match current page filename (without extension) to data-match attribute
+        var page  = location.pathname.split('/').pop().replace(/\.aspx$/i, '').toLowerCase();
+        var links = nav.querySelectorAll('.nav-link');
+        var activeLink = null;
+
+        links.forEach(function (a) {
+            if ((a.getAttribute('data-match') || '').toLowerCase() === page) {
+                a.classList.add('active');
+                activeLink = a;
+            }
+        });
+
+        function moveIndicator(el) {
+            if (!el) { indicator.style.width = '0'; return; }
+            var navRect  = nav.getBoundingClientRect();
+            var linkRect = el.getBoundingClientRect();
+            indicator.style.left  = (linkRect.left - navRect.left) + 'px';
+            indicator.style.width = linkRect.width + 'px';
+        }
+
+        moveIndicator(activeLink);
+
+        links.forEach(function (a) {
+            a.addEventListener('mouseenter', function () { moveIndicator(a); });
+            a.addEventListener('mouseleave', function () { moveIndicator(activeLink); });
+        });
+    })();
+</script>
+
+<script>
+    (function () {
+        function isVisible(el) {
+            if (!el || !el.isConnected) return false;
+            var style = window.getComputedStyle(el);
+            if (style.display === 'none' || style.visibility === 'hidden') return false;
+            if (parseFloat(style.opacity || '1') === 0) return false;
+            if (style.pointerEvents === 'none') return false;
+            if (el.hasAttribute('hidden') || el.getAttribute('aria-hidden') === 'true') return false;
+            var rect = el.getBoundingClientRect();
+            return rect.width > 0 && rect.height > 0;
+        }
+
+        function isModalCandidate(el) {
+            if (!isVisible(el)) return false;
+
+            var style = window.getComputedStyle(el);
+            if (style.position !== 'fixed' && style.position !== 'absolute') return false;
+
+            var id = (el.id || '').toLowerCase();
+            var cls = (typeof el.className === 'string' ? el.className : '').toLowerCase();
+            var text = id + ' ' + cls;
+            if (!/(modal|dialog|backdrop|overlay)/.test(text)) return false;
+
+            var z = parseInt(style.zIndex, 10);
+            if (!Number.isNaN(z) && z < 40) return false;
+
+            var rect = el.getBoundingClientRect();
+            var coversViewport = rect.width >= window.innerWidth * 0.45 && rect.height >= window.innerHeight * 0.45;
+            if (!coversViewport) return false;
+
+            return true;
+        }
+
+        function updateAppModalState() {
+            var nodes = document.querySelectorAll('body *');
+            var active = false;
+
+            for (var i = 0; i < nodes.length; i++) {
+                if (isModalCandidate(nodes[i])) {
+                    active = true;
+                    break;
+                }
+            }
+
+            document.body.classList.toggle('app-modal-active', active);
+        }
+
+        var queued = false;
+        function queueUpdate() {
+            if (queued) return;
+            queued = true;
+            Promise.resolve().then(function () {
+                queued = false;
+                updateAppModalState();
+            });
+        }
+
+        function initObserver() {
+            if (!document.body) return;
+            var observer = new MutationObserver(queueUpdate);
+            observer.observe(document.body, {
+                subtree: true,
+                childList: true,
+                attributes: true,
+                attributeFilter: ['class', 'style', 'hidden', 'aria-hidden']
+            });
+            updateAppModalState();
+        }
+
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initObserver);
+        } else {
+            initObserver();
+        }
+
+        window.addEventListener('load', updateAppModalState);
+        window.addEventListener('resize', queueUpdate);
+    })();
+</script>
+<%-- Page-specific scripts placeholder --%>
+<asp:ContentPlaceHolder ID="ScriptContent" runat="server" />
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+

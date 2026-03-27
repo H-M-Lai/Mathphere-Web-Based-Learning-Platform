@@ -1,0 +1,26 @@
+﻿body {
+    font-family: 'Space Grotesk', sans-serif;
+}
+
+.math-grid {
+    background-image: radial-gradient(#cbd5e1 1px, transparent 1px);
+    background-size: 24px 24px;
+}
+
+.dark .math-grid {
+    background-image: radial-gradient(#334155 1px, transparent 1px);
+}
+
+.button-shadow {
+    box-shadow: 0 4px 0 0 #b45309;
+    transition: all 0.1s ease;
+}
+
+    .button-shadow:active {
+        box-shadow: 0 0px 0 0 #b45309;
+        transform: translateY(4px);
+    }
+
+.card-shadow {
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+}

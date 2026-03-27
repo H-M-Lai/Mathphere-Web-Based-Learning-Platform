@@ -1,0 +1,35 @@
+﻿@layer base {
+    body {
+        background-image: linear-gradient(rgba(0, 0, 0, 0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(0, 0, 0, 0.05) 1px, transparent 1px);
+        background-size: 30px 30px;
+    }
+}
+
+.material-symbols-outlined {
+    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+}
+
+.fill-icon {
+    font-variation-settings: 'FILL' 1;
+}
+
+.timeline-line {
+    background: repeating-linear-gradient( 90deg, #2563eb 0px, #2563eb 10px, transparent 10px, transparent 20px );
+}
+
+.nav-link {
+    font-weight: 700;
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    transition: color 0.3s;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    padding-left: 0.25rem;
+    padding-right: 0.25rem;
+}
+
+.nav-link-active {
+    color: #2563eb;
+    border-bottom: 4px solid #2563eb;
+}

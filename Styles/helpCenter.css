@@ -1,0 +1,224 @@
+﻿/* ===============================
+   Editor toolbar buttons
+================================= */
+.hc-tool-btn {
+    padding: 0.5rem;
+    border-radius: 0.75rem;
+    transition: all 160ms ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: #1e3a8a;
+}
+
+    .hc-tool-btn:hover {
+        background: #ffffff;
+        box-shadow: 0 1px 0 rgba(15, 23, 42, 0.05);
+    }
+
+
+/* ===============================
+   Featured Toggle Switch
+================================= */
+.hc-toggle {
+    position: relative;
+    width: 52px;
+    height: 28px;
+    display: inline-block;
+}
+
+.hc-toggle-checkbox {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    cursor: pointer;
+    z-index: 2;
+}
+
+.hc-toggle-track {
+    position: absolute;
+    inset: 0;
+    background: #d1d5db;
+    border-radius: 9999px;
+    transition: background 180ms ease;
+}
+
+    .hc-toggle-track::after {
+        content: "";
+        position: absolute;
+        top: 4px;
+        left: 4px;
+        width: 20px;
+        height: 20px;
+        background: #ffffff;
+        border-radius: 9999px;
+        transition: transform 180ms ease;
+        box-shadow: 0 1px 2px rgba(0,0,0,0.12);
+    }
+
+.hc-toggle-checkbox:checked + .hc-toggle-track {
+    background: #84cc16;
+}
+
+    .hc-toggle-checkbox:checked + .hc-toggle-track::after {
+        transform: translateX(24px);
+    }
+
+
+/* ===============================
+   Toast Notification
+================================= */
+.hc-toast {
+    position: fixed;
+    right: 24px;
+    bottom: 24px;
+    z-index: 200;
+    background: #0f172a;
+    color: #ffffff;
+    padding: 14px 16px;
+    border-radius: 16px;
+    font-weight: 800;
+    font-size: 12px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    opacity: 0;
+    transform: translateY(12px);
+    transition: all 220ms ease;
+    pointer-events: none;
+    box-shadow: 0 12px 30px rgba(15, 23, 42, 0.25);
+}
+
+    .hc-toast.visible {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+
+/* ===============================
+   Publication Status Pills
+   (Tailwind + WebForms safe)
+================================= */
+
+.hc-pill {
+    position: relative;
+    display: block;
+    cursor: pointer;
+}
+
+/* Completely remove native radio appearance */
+.hc-pill-input {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    margin: 0;
+    cursor: pointer;
+    z-index: 3;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+}
+
+/* Visible pill */
+.hc-pill-card {
+    background: #f9fafb;
+    border: 2px solid #f3f4f6;
+    padding: 1rem;
+    border-radius: 1rem;
+    text-align: center;
+    transition: all 160ms ease;
+}
+
+.hc-pill-text {
+    font-size: 0.875rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    color: #9ca3af;
+}
+
+/* Draft selected */
+.hc-pill-input:checked + .hc-pill-card {
+    border-color: #2563eb;
+    background: rgba(37, 99, 235, 0.06);
+}
+
+    .hc-pill-input:checked + .hc-pill-card .hc-pill-text {
+        color: #2563eb;
+    }
+
+    /* Published selected */
+    .hc-pill-input:checked + .hc-pill-card.hc-pill-card-green {
+        border-color: #84cc16;
+        background: rgba(132, 204, 22, 0.08);
+    }
+
+        .hc-pill-input:checked + .hc-pill-card.hc-pill-card-green .hc-pill-text-green {
+            color: #84cc16;
+        }
+
+
+/* ===============================
+   Action Buttons (LinkButtons)
+================================= */
+
+.hc-action {
+    width: 100%;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    text-transform: uppercase;
+    font-weight: 900;
+    letter-spacing: -0.01em;
+    border-radius: 2rem;
+    user-select: none;
+    transition: all 160ms ease;
+    text-decoration: none !important;
+    cursor: pointer;
+    border: 0;
+    outline: none;
+    line-height: 1;
+}
+
+    .hc-action span {
+        display: inline-flex;
+        align-items: center;
+    }
+
+/* Yellow Publish Button */
+.hc-action-primary {
+    background: #f9d006;
+    color: #1e3a8a;
+    padding: 1.25rem 2rem;
+    box-shadow: 0 8px 0 0 #d4af37;
+}
+
+    .hc-action-primary:hover {
+        background: #f3c700;
+    }
+
+    .hc-action-primary:active {
+        transform: translateY(4px);
+        box-shadow: 0 4px 0 0 #d4af37;
+    }
+
+/* Blue Outline Draft Button */
+.hc-action-outline {
+    background: #ffffff;
+    color: #2563eb;
+    padding: 1rem 2rem;
+    border: 4px solid #2563eb;
+}
+
+    .hc-action-outline:hover {
+        background: #f9fafb;
+    }
+
+/* Disabled look */
+.hc-action[disabled],
+.hc-action.disabled {
+    opacity: 0.6;
+    pointer-events: none;
+}

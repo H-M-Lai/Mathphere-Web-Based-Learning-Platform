@@ -1,0 +1,423 @@
+﻿/* Admin Dashboard Styles */
+
+@layer base {
+    body {
+        @apply bg-background-light font-display text-math-dark-blue;
+        background-image: linear-gradient(rgba(0, 0, 0, 0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(0, 0, 0, 0.03) 1px, transparent 1px);
+        background-size: 30px 30px;
+        background-attachment: fixed;
+    }
+}
+
+.material-symbols-outlined {
+    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+}
+
+.fill-icon {
+    font-variation-settings: 'FILL' 1;
+}
+
+/* Chart Grid Background */
+.chart-grid {
+    background-image: linear-gradient(to top, #e5e7eb 1px, transparent 1px);
+    background-size: 100% 25%;
+}
+
+/* Line Chart Animation */
+.line-chart-path {
+    stroke-dasharray: 1000;
+    stroke-dashoffset: 1000;
+    animation: drawLine 2s ease-in-out forwards;
+}
+
+@keyframes drawLine {
+    to {
+        stroke-dashoffset: 0;
+    }
+}
+
+/* Stats Cards Hover Effect */
+.hover\:-translate-y-2:hover {
+    transform: translateY(-0.5rem);
+}
+
+/* Server Status Pulse Animation */
+@keyframes pulse {
+    0%, 100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.5;
+    }
+}
+
+.animate-pulse {
+    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Sidebar Navigation Active State */
+.bg-math-blue {
+    background-color: #2563eb;
+}
+
+/* Role Distribution Chart Animation */
+svg circle {
+    transition: stroke-dashoffset 0.5s ease-in-out;
+}
+
+/* Activity Log Table Row Hover */
+tbody tr:hover {
+    background-color: rgba(249, 250, 251, 0.5);
+}
+
+/* Smooth Scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f5f9;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 10px;
+}
+
+    ::-webkit-scrollbar-thumb:hover {
+        background: #94a3b8;
+    }
+
+/* Stats Card Animation on Load */
+.bg-white.rounded-\[2rem\] {
+    animation: fadeInUp 0.6s ease-out;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Stagger Animation for Stats Cards */
+.grid > div:nth-child(1) {
+    animation-delay: 0.1s;
+}
+
+.grid > div:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.grid > div:nth-child(3) {
+    animation-delay: 0.3s;
+}
+
+/* Icon Scale Animation */
+.group-hover\:scale-110:hover {
+    transform: scale(1.1);
+}
+
+/* Border Colors */
+.border-math-green {
+    border-color: #84cc16;
+}
+
+.border-math-blue {
+    border-color: #2563eb;
+}
+
+.border-primary {
+    border-color: #f9d006;
+}
+
+/* Text Colors */
+.text-math-green {
+    color: #84cc16;
+}
+
+.text-math-blue {
+    color: #2563eb;
+}
+
+.text-primary {
+    color: #f9d006;
+}
+
+.text-math-dark-blue {
+    color: #1e3a8a;
+}
+
+/* Background Colors */
+.bg-math-green {
+    background-color: #84cc16;
+}
+
+.bg-math-blue {
+    background-color: #2563eb;
+}
+
+.bg-primary {
+    background-color: #f9d006;
+}
+
+/* Shadow Effects */
+.shadow-math-blue\/20 {
+    box-shadow: 0 10px 15px -3px rgba(37, 99, 235, 0.2);
+}
+
+/* Button Hover Effects */
+button:hover {
+    transition: all 0.3s ease;
+}
+
+/* Table Styling */
+table {
+    border-collapse: collapse;
+}
+
+thead {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+/* Export Button Animation */
+#btnExportLogs:hover {
+    transform: scale(1.02);
+}
+
+/* Footer Styling */
+footer {
+    backdrop-filter: blur(10px);
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    aside {
+        position: fixed;
+        left: -18rem;
+        transition: left 0.3s ease;
+    }
+
+        aside.mobile-open {
+            left: 0;
+        }
+
+    .text-4xl {
+        font-size: 2rem;
+    }
+
+    .text-5xl {
+        font-size: 2.5rem;
+    }
+}
+
+/* Card Border Bottom Effect */
+.border-b-\[10px\] {
+    border-bottom-width: 10px;
+}
+
+/* Rounded Corners */
+.rounded-\[2rem\] {
+    border-radius: 2rem;
+}
+
+.rounded-\[2\.5rem\] {
+    border-radius: 2.5rem;
+}
+
+/* Chart SVG Styling */
+svg path {
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+}
+
+/* Activity Log Status Badges */
+.rounded-full {
+    white-space: nowrap;
+}
+
+/* Sidebar Profile Card */
+.border-2.border-primary {
+    border-color: #f9d006;
+    border-width: 2px;
+}
+
+/* Navigation Links Hover */
+nav a:hover .material-symbols-outlined {
+    transform: scale(1.1);
+    transition: transform 0.3s ease;
+}
+
+/* Active Navigation Link */
+nav a.bg-math-blue {
+    position: relative;
+}
+
+    nav a.bg-math-blue::before {
+        content: '';
+        position: absolute;
+        left: -2rem;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 4px;
+        height: 70%;
+        background-color: #f9d006;
+        border-radius: 0 4px 4px 0;
+    }
+
+/* Server Status Indicator */
+.animate-pulse + span {
+    font-weight: 900;
+}
+
+/* Chart Container */
+.h-\[350px\] {
+    height: 350px;
+}
+
+/* Role Distribution Size */
+.size-64 {
+    width: 16rem;
+    height: 16rem;
+}
+
+.size-32 {
+    width: 8rem;
+    height: 8rem;
+}
+
+/* Background Decorative Icons */
+.fixed.inset-0.-z-10 span {
+    opacity: 0.03;
+}
+
+/* Loading Animation */
+@keyframes shimmer {
+    0% {
+        background-position: -1000px 0;
+    }
+
+    100% {
+        background-position: 1000px 0;
+    }
+}
+
+.loading-shimmer {
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 1000px 100%;
+    animation: shimmer 2s infinite;
+}
+
+/* Print Styles */
+@media print {
+    aside {
+        display: none;
+    }
+
+    .fixed.inset-0 {
+        display: none;
+    }
+
+    main {
+        margin: 0;
+        padding: 1rem;
+    }
+
+    button {
+        display: none;
+    }
+}
+
+/* Accessibility Focus States */
+a:focus-visible,
+button:focus-visible {
+    outline: 2px solid #2563eb;
+    outline-offset: 2px;
+}
+
+/* Dark Mode Support (Optional) */
+@media (prefers-color-scheme: dark) {
+    body {
+        background-color: #f8f8f5;
+        color: #f1f5f9;
+    }
+
+    .bg-white {
+        background-color: #1e293b;
+    }
+
+    .text-gray-600 {
+        color: #94a3b8;
+    }
+}
+
+/* Animation Delays for Activity Log Rows */
+tbody tr {
+    animation: fadeIn 0.4s ease-out;
+}
+
+    tbody tr:nth-child(1) {
+        animation-delay: 0.05s;
+    }
+
+    tbody tr:nth-child(2) {
+        animation-delay: 0.1s;
+    }
+
+    tbody tr:nth-child(3) {
+        animation-delay: 0.15s;
+    }
+
+    tbody tr:nth-child(4) {
+        animation-delay: 0.2s;
+    }
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateX(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Tooltip Styling (Optional) */
+[data-tooltip]:hover::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    background-color: #1e293b;
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    font-size: 0.75rem;
+    font-weight: bold;
+    white-space: nowrap;
+    z-index: 1000;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    margin-bottom: 0.5rem;
+}
+
+/* Gradient Background for Sidebar */
+aside {
+    background: linear-gradient(to bottom, #ffffff 0%, #fafafa 100%);
+}
+
+/* Icon Glow Effect on Hover */
+.material-symbols-outlined:hover {
+    filter: drop-shadow(0 0 8px currentColor);
+    transition: filter 0.3s ease;
+}

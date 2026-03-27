@@ -1,0 +1,769 @@
+<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Student.master.cs" Inherits="MathSphere.Student" %>
+
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head runat="server">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><asp:ContentPlaceHolder ID="TitleContent" runat="server" /> - MathSphere</title>
+
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+    <link href="CSS/student.css" rel="stylesheet" />
+
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#f9d006",
+                        "background-light": "#f8f8f5",
+                        "math-blue": "#2563eb",
+                        "math-green": "#84cc16",
+                        "math-dark-blue": "#1e3a8a",
+                    },
+                    fontFamily: { "display": ["Space Grotesk", "sans-serif"] },
+                    borderRadius: { "DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+
+    <style type="text/tailwindcss">
+        @layer base {
+            body {
+                @apply bg-background-light font-display text-math-dark-blue;
+                background-image:
+                    linear-gradient(rgba(0,0,0,0.03) 1px, transparent 1px),
+                    linear-gradient(90deg, rgba(0,0,0,0.03) 1px, transparent 1px);
+                background-size: 40px 40px;
+            }
+        }
+
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .fill-icon { font-variation-settings: 'FILL' 1; }
+
+        @layer components {
+            .nav-link {
+                @apply relative font-bold text-[13px] uppercase tracking-widest text-gray-400 hover:text-math-blue transition-colors pb-2;
+            }
+            .nav-link.active { @apply text-math-blue; }
+        }
+
+        @keyframes floaty {
+            0%, 100% { transform: translate3d(0,0,0) rotate(var(--r)); }
+            50%       { transform: translate3d(var(--x), var(--y), 0) rotate(var(--r)); }
+        }
+        .bg-float { animation: floaty var(--d, 18s) ease-in-out infinite; will-change: transform; }
+        @media (prefers-reduced-motion: reduce) { .bg-float { animation: none !important; } }
+
+        @keyframes moduleSlideIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+        .module-slide-in { animation: moduleSlideIn 420ms ease-out both; }
+
+        @keyframes fadeInSoft {
+            from { opacity: 0; }
+            to   { opacity: 1; }
+        }
+        .module-fade-in { animation: fadeInSoft 520ms cubic-bezier(.22,.61,.36,1) both; }
+
+        /* MathPlayground dropdown pop */
+        @keyframes dropIn {
+            from { opacity: 0; transform: translateY(-8px) scale(.96); }
+            to   { opacity: 1; transform: translateY(0)    scale(1); }
+        }
+        .playground-open { animation: dropIn .18s cubic-bezier(.34,1.2,.64,1) forwards; }
+        body.app-modal-active form#form1 > header,
+        body.app-modal-active form#form1 > footer {
+            position: relative !important; z-index: 0 !important; pointer-events: none !important; opacity: 1 !important; filter: none !important; transform: none !important; transition: z-index .18s ease;
+        }
+    </style>
+
+    <asp:ContentPlaceHolder ID="HeadContent" runat="server" />
+</head>
+
+<body class="min-h-screen relative overflow-x-hidden">
+<form id="form1" runat="server" class="min-h-screen flex flex-col">
+
+    <asp:ScriptManager runat="server">
+        <Scripts>
+            <asp:ScriptReference Name="MsAjaxBundle" />
+            <asp:ScriptReference Name="jquery" />
+            <asp:ScriptReference Name="WebForms.js"         Assembly="System.Web" Path="~/Scripts/WebForms/WebForms.js" />
+            <asp:ScriptReference Name="WebUIValidation.js"  Assembly="System.Web" Path="~/Scripts/WebForms/WebUIValidation.js" />
+            <asp:ScriptReference Name="MenuStandards.js"    Assembly="System.Web" Path="~/Scripts/WebForms/MenuStandards.js" />
+            <asp:ScriptReference Name="GridView.js"         Assembly="System.Web" Path="~/Scripts/WebForms/GridView.js" />
+            <asp:ScriptReference Name="DetailsView.js"      Assembly="System.Web" Path="~/Scripts/WebForms/DetailsView.js" />
+            <asp:ScriptReference Name="TreeView.js"         Assembly="System.Web" Path="~/Scripts/WebForms/TreeView.js" />
+            <asp:ScriptReference Name="WebParts.js"         Assembly="System.Web" Path="~/Scripts/WebForms/WebParts.js" />
+            <asp:ScriptReference Name="Focus.js"            Assembly="System.Web" Path="~/Scripts/WebForms/Focus.js" />
+            <asp:ScriptReference Name="WebFormsBundle" />
+        </Scripts>
+    </asp:ScriptManager>
+
+    <!-- Floating background math symbols -->
+    <div class="fixed inset-0 pointer-events-none overflow-hidden opacity-[0.05] -z-10">
+        <span class="material-symbols-outlined absolute text-[140px] top-32 left-[6%] text-primary bg-float"
+              style="--r:17deg; --x:18px; --y:-12px; --d:22s;">add</span>
+        <span class="material-symbols-outlined absolute text-[160px] top-96 right-[10%] text-primary bg-float"
+              style="--r:-23deg; --x:-14px; --y:16px; --d:26s;">percent</span>
+        <span class="material-symbols-outlined absolute text-[150px] bottom-72 left-[14%] text-primary bg-float"
+              style="--r:41deg; --x:12px; --y:10px; --d:24s;">equal</span>
+        <span class="material-symbols-outlined absolute text-[170px] bottom-24 right-[12%] text-primary bg-float"
+              style="--r:-31deg; --x:-16px; --y:-10px; --d:28s;">close</span>
+        <span class="material-symbols-outlined absolute text-[130px] top-1/3 right-1/4 text-primary bg-float"
+              style="--r:9deg; --x:10px; --y:-14px; --d:20s;">function</span>
+    </div>
+
+    <!-- HEADER -->
+    <header class="sticky top-0 z-50 px-5 pt-5 pb-3 lg:px-6">
+        <div class="max-w-[1440px] mx-auto flex items-center rounded-[2rem] border border-gray-200/90 bg-white px-6 py-4 shadow-[0_20px_55px_rgba(37,99,235,0.12)] backdrop-blur-xl lg:px-8">
+
+            <!-- Brand -->
+            <a class="flex items-center gap-3" href='<%= IsGuest ? "Default.aspx" : "StudentDashboard.aspx" %>'>
+
+                <img src="Image/white themed MathSphere logo transparent 2.png"
+                     class="h-10 lg:h-12 w-auto object-contain" alt="MathSphere Logo" />
+                <span class="text-2xl lg:text-3xl font-extrabold tracking-tight uppercase text-math-dark-blue">
+                    MATHSPHERE
+                </span>
+            </a>
+
+            <!-- Nav -->
+            <nav id="mainNav" class="relative flex items-center gap-8 ml-12 z-50">
+                <a href="StudentDashboard.aspx" class="nav-link" data-match="StudentDashboard">DASHBOARD</a>
+                <a href="Missions.aspx"         class="nav-link" data-match="Missions">MISSIONS</a>
+                <a href="BrowseModule.aspx"     class="nav-link" data-match="BrowseModule">MODULE</a>
+                <a href="Leaderboard.aspx"      class="nav-link" data-match="Leaderboard">LEADERBOARD</a>
+                <a href="Forum.aspx"            class="nav-link" data-match="Forum">FORUM</a>
+                <span id="navIndicator"
+                      class="absolute bottom-[2px] h-1 w-0 bg-math-blue rounded-full transition-all duration-200 ease-out"></span>
+            </nav>
+
+            <!-- Right: MathPlayground + Streak/XP/Avatar pill -->
+            <div class="ml-auto flex items-center gap-3">
+
+                <!-- MathPlayground Dropdown -->
+                <div class="relative" id="mpWrap">
+
+                    <button type="button" id="btnMathPlayground"
+                            onclick="toggleMathPlayground(event)"
+                            class="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-2xl
+                                   bg-primary border border-primary/60 text-math-dark-blue
+                                   font-black text-xs uppercase tracking-widest shadow-sm
+                                   hover:shadow-md hover:scale-[1.02] transition-all select-none">
+                        <span class="material-symbols-outlined text-base fill-icon">calculate</span>
+                        Math Playground
+                        <span class="material-symbols-outlined text-sm transition-transform duration-200"
+                              id="mpChevron">expand_more</span>
+                    </button>
+
+                    <!-- Panel -->
+                    <div id="mpDropdown"
+                         class="hidden absolute right-0 top-[calc(100%+10px)] w-[260px] z-[200]
+                                bg-white rounded-[1.4rem] border border-gray-100
+                                shadow-[0_24px_64px_rgba(0,0,0,0.13)] overflow-hidden">
+
+                        <div class="px-5 pt-4 pb-2">
+                            <p class="text-[10px] font-black uppercase tracking-[0.22em] text-gray-400">
+                                Learning Tools
+                            </p>
+                        </div>
+
+                        <!-- Geometry Calculator -->
+                        <a href="GeometryCalc.aspx"
+                           class="group flex items-center gap-3 px-4 py-3.5 mx-2 mb-1
+                                  rounded-2xl hover:bg-math-blue/5 transition-colors">
+                            <div class="size-10 rounded-xl bg-math-blue/10 flex items-center justify-center
+                                        flex-shrink-0 group-hover:bg-math-blue transition-colors duration-200">
+                                <span class="material-symbols-outlined text-math-blue fill-icon
+                                             group-hover:text-white transition-colors">calculate</span>
+                            </div>
+                            <div class="min-w-0 flex-1">
+                                <p class="font-black text-sm text-math-dark-blue leading-tight
+                                          group-hover:text-math-blue transition-colors">
+                                    Geometry Calculator
+                                </p>
+                                <p class="text-[11px] text-gray-400 font-semibold mt-0.5">
+                                    Area, circles &amp; Pythagoras
+                                </p>
+                            </div>
+                            <span class="material-symbols-outlined text-gray-300 text-sm
+                                         group-hover:text-math-blue transition-colors">chevron_right</span>
+                        </a>
+
+                        <!-- Graph Explorer -->
+                        <a href="GraphTool.aspx"
+                           class="group flex items-center gap-3 px-4 py-3.5 mx-2 mb-2
+                                  rounded-2xl hover:bg-math-green/5 transition-colors">
+                            <div class="size-10 rounded-xl bg-math-green/10 flex items-center justify-center
+                                        flex-shrink-0 group-hover:bg-math-green transition-colors duration-200">
+                                <span class="material-symbols-outlined text-math-green fill-icon
+                                             group-hover:text-white transition-colors">show_chart</span>
+                            </div>
+                            <div class="min-w-0 flex-1">
+                                <p class="font-black text-sm text-math-dark-blue leading-tight
+                                          group-hover:text-math-blue transition-colors">
+                                    Graph Explorer
+                                </p>
+                                <p class="text-[11px] text-gray-400 font-semibold mt-0.5">
+                                    Linear &amp; quadratic graphs
+                                </p>
+                            </div>
+                            <span class="material-symbols-outlined text-gray-300 text-sm
+                                         group-hover:text-math-blue transition-colors">chevron_right</span>
+                        </a>
+
+                        <div class="border-t border-gray-100 mx-4"></div>
+                        <p class="px-5 py-3 text-[10px] font-semibold text-gray-400 italic">
+                            More tools coming soon
+                        </p>
+                    </div>
+                </div>
+                <!-- End MathPlayground -->
+                <!-- Streak + XP + Avatar pill -->
+                <div class="flex items-center gap-3 bg-gray-100/80 p-1.5 rounded-full border border-gray-200 shadow-inner">
+
+                    <div class="bg-primary/35 text-math-dark-blue px-3.5 py-1.5 rounded-full flex items-center gap-2 border border-primary/45">
+                        <span class="text-lg leading-none" aria-hidden="true">&#128293;</span>
+                        <span class="font-black text-sm"><asp:Literal ID="litStreak" runat="server" Text="0" /></span>
+                        <span class="text-sm font-semibold text-math-dark-blue/80">Day Streak</span>
+                    </div>
+
+                    <div class="flex items-center gap-2 pr-4 pl-1">
+                        <div class="size-6 bg-math-blue rounded-full flex items-center justify-center shadow-sm">
+                            <span class="material-symbols-outlined text-white text-xs fill-icon">star</span>
+                        </div>
+                        <span class="font-black text-sm text-math-dark-blue">
+                            <asp:Literal ID="litXP" runat="server" Text="0" />
+                        </span>
+                        <span class="text-sm font-semibold text-gray-500">XP</span>
+                    </div>
+
+                                        <a href="StudentProfile.aspx"
+                       class="block size-10 rounded-full border-2 border-math-blue overflow-hidden hover:scale-105 transition-transform cursor-pointer"
+                       aria-label="Go to profile">
+                        <asp:Image ID="imgAvatar" runat="server"
+                            CssClass="w-full h-full object-cover bg-blue-100"
+                            AlternateText="Avatar" />
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </header>
+
+    <!-- Page Content -->
+    <main class="flex-1 max-w-7xl mx-auto w-full px-8 py-12 z-10">
+        <asp:ContentPlaceHolder ID="MainContent" runat="server" />
+    </main>
+
+    <!-- AI Tutor Widget -->
+    <div id="aiTutorRoot" class="fixed bottom-5 right-5 z-[120]">
+        <button id="aiTutorFab" type="button"
+                class="size-14 rounded-full bg-math-blue hover:bg-math-dark-blue text-white shadow-xl border-2 border-white/70 transition-colors flex items-center justify-center"
+                aria-label="Open AI Tutor"
+                title="Ask AI Tutor">
+            <span class="material-symbols-outlined fill-icon text-2xl">school</span>
+        </button>
+
+        <section id="aiTutorPanel"
+                 class="hidden mt-3 w-[min(92vw,380px)] h-[75vh] max-h-[640px] rounded-[1.6rem] bg-white border-2 border-gray-100 shadow-[0_22px_55px_rgba(0,0,0,0.2)] overflow-hidden flex flex-col">
+            <header class="px-5 py-4 border-b border-gray-100 bg-math-blue text-white">
+                <div class="flex items-center justify-between gap-3">
+                    <div class="flex items-center gap-2">
+                        <span class="material-symbols-outlined fill-icon text-xl">school</span>
+                        <div>
+                            <p class="text-sm font-black uppercase tracking-wider">AI Tutor</p>
+                            <p class="text-[11px] text-blue-100">Hints-first math guidance</p>
+                            <span id="aiTutorModel"
+                                  class="hidden mt-1 inline-flex max-w-[160px] px-2 py-0.5 rounded-full text-[9px] font-black bg-white/20 text-blue-100 border border-white/20 truncate whitespace-nowrap"></span>
+                        </div>
+                    </div>
+                    <button id="aiTutorClose" type="button"
+                            class="size-8 rounded-xl bg-white/20 hover:bg-white/30 flex items-center justify-center"
+                            aria-label="Close AI Tutor">
+                        <span class="material-symbols-outlined text-lg">close</span>
+                    </button>
+                </div>
+            </header>
+
+            <div id="aiTutorError"
+                 class="hidden mx-5 mt-4 px-3 py-2 rounded-xl text-[12px] font-bold border shrink-0"></div>
+
+            <div id="aiTutorMessages"
+                 class="px-4 py-4 space-y-3 overflow-y-auto flex-1 min-h-0 bg-gradient-to-b from-white to-gray-50"></div>
+
+            <div class="p-4 border-t border-gray-100 bg-white shrink-0">
+                <textarea id="aiTutorInput" rows="2"
+                          class="w-full resize-none rounded-2xl border-2 border-gray-200 focus:border-math-blue focus:ring-0 p-3 text-sm text-math-dark-blue outline-none"
+                          placeholder="Ask your math question..."></textarea>
+                <div class="mt-3 flex items-center justify-between gap-3">
+                    <div class="flex items-center gap-2">
+                        <p id="aiTutorStatus" class="text-[11px] font-bold text-gray-400">Ready</p>
+                        <button id="aiTutorClear" type="button"
+                                class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full border border-math-blue/30 bg-math-blue/5 text-[10px] font-black text-math-blue hover:bg-math-blue/10 hover:border-math-blue/50 transition-colors uppercase tracking-widest">
+                            <span class="material-symbols-outlined text-sm leading-none">delete</span>
+                            Clear
+                        </button>
+                    </div>
+                    <button id="aiTutorSend" type="button"
+                            class="px-4 py-2 rounded-xl bg-math-blue hover:bg-math-dark-blue text-white text-xs font-black uppercase tracking-widest transition-colors">
+                        Send
+                    </button>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer class="mt-auto w-full px-5 pb-8 pt-3 lg:px-6">
+        <div class="max-w-[1440px] mx-auto flex flex-col items-center justify-between gap-6 rounded-[2rem] border border-gray-200/90 bg-white px-6 py-7 shadow-[0_20px_48px_rgba(15,23,42,0.1)] md:flex-row lg:px-8">
+            <div class="flex flex-col gap-3 text-center md:text-left">
+                <div class="flex items-center justify-center md:justify-start gap-3">
+                    <img src="Image/white themed MathSphere logo transparent 2.png"
+                         class="h-8 w-auto object-contain" alt="MathSphere Logo" />
+                    <span class="font-extrabold text-math-dark-blue tracking-tight text-lg uppercase">
+                        MATHSPHERE
+                    </span>
+                </div>
+                <p class="text-sm font-bold text-gray-400">
+                    The ultimate playground for future mathematicians.
+                </p>
+            </div>
+            <div class="flex gap-8">
+                <a class="text-sm font-black text-gray-500 hover:text-math-blue transition-colors" href="Privacy.aspx">Privacy</a>
+                <a class="text-sm font-black text-gray-500 hover:text-math-blue transition-colors" href="Terms.aspx">Terms</a>
+                <a class="text-sm font-black text-gray-500 hover:text-math-blue transition-colors" href="StudentSupport.aspx">Help Center</a>
+            </div>
+            <p class="text-xs font-bold text-gray-300 text-center md:text-right">
+                © 2026 MathSphere Studios. All Rights Calculated.
+            </p>
+        </div>
+    </footer>
+
+<script>
+    (function () {
+        function isVisible(el) {
+            if (!el || !el.isConnected) return false;
+            var style = window.getComputedStyle(el);
+            if (style.display === 'none' || style.visibility === 'hidden') return false;
+            if (parseFloat(style.opacity || '1') === 0) return false;
+            if (style.pointerEvents === 'none') return false;
+            if (el.hasAttribute('hidden') || el.getAttribute('aria-hidden') === 'true') return false;
+            var rect = el.getBoundingClientRect();
+            return rect.width > 0 && rect.height > 0;
+        }
+
+        function isModalCandidate(el) {
+            if (!isVisible(el)) return false;
+
+            var style = window.getComputedStyle(el);
+            if (style.position !== 'fixed' && style.position !== 'absolute') return false;
+
+            var id = (el.id || '').toLowerCase();
+            var cls = (typeof el.className === 'string' ? el.className : '').toLowerCase();
+            var text = id + ' ' + cls;
+            if (!/(modal|dialog|backdrop|overlay)/.test(text)) return false;
+
+            var z = parseInt(style.zIndex, 10);
+            if (!Number.isNaN(z) && z < 40) return false;
+
+            var rect = el.getBoundingClientRect();
+            var coversViewport = rect.width >= window.innerWidth * 0.45 && rect.height >= window.innerHeight * 0.45;
+            if (!coversViewport) return false;
+
+            return true;
+        }
+
+        function updateAppModalState() {
+            var nodes = document.querySelectorAll('body *');
+            var active = false;
+
+            for (var i = 0; i < nodes.length; i++) {
+                if (isModalCandidate(nodes[i])) {
+                    active = true;
+                    break;
+                }
+            }
+
+            document.body.classList.toggle('app-modal-active', active);
+        }
+
+        var queued = false;
+        function queueUpdate() {
+            if (queued) return;
+            queued = true;
+            Promise.resolve().then(function () {
+                queued = false;
+                updateAppModalState();
+            });
+        }
+
+        function initObserver() {
+            if (!document.body) return;
+            var observer = new MutationObserver(queueUpdate);
+            observer.observe(document.body, {
+                subtree: true,
+                childList: true,
+                attributes: true,
+                attributeFilter: ['class', 'style', 'hidden', 'aria-hidden']
+            });
+            updateAppModalState();
+        }
+
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initObserver);
+        } else {
+            initObserver();
+        }
+
+        window.addEventListener('load', updateAppModalState);
+        window.addEventListener('resize', queueUpdate);
+    })();
+</script>
+    <script src="Scripts/Student_Script/student.bundle.js"></script>
+
+    <!-- MathPlayground toggle script -->
+    <script>
+            (function () {
+                function toggleMathPlayground(e) {
+                    e.stopPropagation();
+                    var dd = document.getElementById('mpDropdown');
+                    var chv = document.getElementById('mpChevron');
+                    var willOpen = dd.classList.contains('hidden');
+                    dd.classList.toggle('hidden', !willOpen);
+                    if (willOpen) {
+                        dd.classList.add('playground-open');
+                        chv.style.transform = 'rotate(180deg)';
+                    } else {
+                        dd.classList.remove('playground-open');
+                        chv.style.transform = '';
+                    }
+                }
+                window.toggleMathPlayground = toggleMathPlayground;
+
+                document.addEventListener('click', function (e) {
+                    var wrap = document.getElementById('mpWrap');
+                    if (wrap && !wrap.contains(e.target)) {
+                        var dd = document.getElementById('mpDropdown');
+                        var chv = document.getElementById('mpChevron');
+                        if (dd) { dd.classList.add('hidden'); dd.classList.remove('playground-open'); }
+                        if (chv) { chv.style.transform = ''; }
+                    }
+                });
+            })();
+    </script>
+
+    <script>
+        (function () {
+            var endpoint = '<%= ResolveUrl("~/AiTutor.ashx") %>';
+            var storageKey = 'aiTutorState:student-global';
+            var SEND_DEBOUNCE_MS = 500;
+
+            var btnOpen = document.getElementById('aiTutorFab');
+            var btnClose = document.getElementById('aiTutorClose');
+            var panel = document.getElementById('aiTutorPanel');
+            var input = document.getElementById('aiTutorInput');
+            var btnSend = document.getElementById('aiTutorSend');
+            var btnClear = document.getElementById('aiTutorClear');
+            var statusEl = document.getElementById('aiTutorStatus');
+            var modelEl = document.getElementById('aiTutorModel');
+            var errorEl = document.getElementById('aiTutorError');
+            var messagesEl = document.getElementById('aiTutorMessages');
+            if (!btnOpen || !panel || !btnSend || !input || !messagesEl) return;
+
+            var isSending = false;
+            var history = [];
+            var messages = [];
+            var lastSendAt = 0;
+
+            function saveState() {
+                try {
+                    sessionStorage.setItem(storageKey, JSON.stringify({
+                        messages: messages.slice(-10),
+                        history: history.slice(-12)
+                    }));
+                } catch (e) { }
+            }
+
+            function setModel(modelName) {
+                if (!modelEl) return;
+                if (!modelName) {
+                    modelEl.classList.add('hidden');
+                    modelEl.textContent = '';
+                    return;
+                }
+                modelEl.textContent = modelName;
+                modelEl.title = modelName;
+                modelEl.classList.remove('hidden');
+            }
+
+            function toggle(open) {
+                var shouldOpen = typeof open === 'boolean' ? open : panel.classList.contains('hidden');
+                panel.classList.toggle('hidden', !shouldOpen);
+                btnOpen.classList.toggle('hidden', shouldOpen);
+                if (shouldOpen) setTimeout(function () { input.focus(); }, 60);
+            }
+
+            function setStatus(text) {
+                statusEl.textContent = text || 'Ready';
+            }
+
+            function setError(text, code) {
+                if (!text) {
+                    errorEl.className = 'hidden mx-5 mt-4 px-3 py-2 rounded-xl text-[12px] font-bold border shrink-0';
+                    errorEl.textContent = '';
+                    return;
+                }
+                var isRate = code === 'RATE_LIMIT';
+                errorEl.className =
+                    'mx-5 mt-4 px-3 py-2 rounded-xl text-[12px] font-bold border shrink-0 ' +
+                    (isRate
+                        ? 'bg-yellow-50 text-yellow-700 border-yellow-200'
+                        : 'bg-red-50 text-red-700 border-red-200');
+                errorEl.textContent = text;
+            }
+
+            function escapeHtml(text) {
+                return (text || '')
+                    .replace(/&/g, '&amp;')
+                    .replace(/</g, '&lt;')
+                    .replace(/>/g, '&gt;')
+                    .replace(/"/g, '&quot;')
+                    .replace(/'/g, '&#39;');
+            }
+
+            function renderMarkdownLite(text) {
+                var lines = (text || '').split(/\r?\n/);
+                var html = [];
+                var inList = false;
+
+                function closeList() {
+                    if (inList) {
+                        html.push('</ul>');
+                        inList = false;
+                    }
+                }
+
+                for (var i = 0; i < lines.length; i++) {
+                    var raw = lines[i] || '';
+                    var trimmed = raw.trim();
+
+                    if (!trimmed) {
+                        closeList();
+                        html.push('<div class="h-2"></div>');
+                        continue;
+                    }
+
+                    if (/^(\*{3,}|-{3,}|_{3,})$/.test(trimmed)) {
+                        closeList();
+                        html.push('<hr class="my-2 border-gray-200" />');
+                        continue;
+                    }
+
+                    var safe = escapeHtml(raw)
+                        .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+                        .replace(/(^|[\s(])\*(?!\*)([^*\n]+?)\*(?!\*)/g, '$1<em>$2</em>');
+
+                    if (/^###\s+/.test(trimmed)) {
+                        closeList();
+                        html.push('<h4 class="font-black text-sm mt-1 mb-1">' + safe.replace(/^###\s+/, '') + '</h4>');
+                    } else if (/^##\s+/.test(trimmed)) {
+                        closeList();
+                        html.push('<h3 class="font-black text-base mt-1 mb-1">' + safe.replace(/^##\s+/, '') + '</h3>');
+                    } else if (/^#\s+/.test(trimmed)) {
+                        closeList();
+                        html.push('<h2 class="font-black text-lg mt-1 mb-1">' + safe.replace(/^#\s+/, '') + '</h2>');
+                    } else if (/^\*\s+/.test(trimmed)) {
+                        if (!inList) {
+                            html.push('<ul class="list-disc pl-5 space-y-1">');
+                            inList = true;
+                        }
+                        html.push('<li class="leading-relaxed text-[13px]">' + safe.replace(/^\*\s+/, '') + '</li>');
+                    } else {
+                        closeList();
+                        html.push('<p class="leading-relaxed text-[13px]">' + safe + '</p>');
+                    }
+                }
+
+                closeList();
+                return html.join('');
+            }
+
+            function appendMessage(role, text, skipStore) {
+                var wrap = document.createElement('div');
+                wrap.className = role === 'user' ? 'flex justify-end' : 'flex justify-start';
+
+                var bubble = document.createElement('div');
+                bubble.className =
+                    role === 'user'
+                        ? 'max-w-[86%] rounded-2xl rounded-br-md bg-math-blue text-white px-3 py-2 text-[13px] font-semibold shadow'
+                        : 'max-w-[92%] rounded-2xl rounded-bl-md bg-white border border-gray-200 px-3 py-2 text-math-dark-blue shadow-sm';
+
+                bubble.innerHTML = role === 'user' ? escapeHtml(text) : renderMarkdownLite(text);
+                wrap.appendChild(bubble);
+                messagesEl.appendChild(wrap);
+                messagesEl.scrollTop = messagesEl.scrollHeight;
+
+                if (!skipStore) {
+                    messages.push({ role: role, text: text });
+                    if (messages.length > 10) messages = messages.slice(messages.length - 10);
+                    saveState();
+                }
+            }
+
+            function getPageContext() {
+                var params = new URLSearchParams(window.location.search);
+                return {
+                    moduleId: params.get('moduleId'),
+                    pagePath: window.location.pathname
+                };
+            }
+
+            function clearChat() {
+                messages = [];
+                history = [];
+                messagesEl.innerHTML = '';
+                setError('');
+                setModel('');
+                setStatus('Ready');
+                appendMessage('assistant', 'Hi! I am your AI Tutor. Ask any math question and I will guide you step-by-step.');
+                saveState();
+            }
+
+            function restoreState() {
+                try {
+                    var raw = sessionStorage.getItem(storageKey);
+                    if (!raw) return false;
+                    var state = JSON.parse(raw);
+                    var savedMessages = Array.isArray(state.messages) ? state.messages : [];
+                    var savedHistory = Array.isArray(state.history) ? state.history : [];
+                    if (savedMessages.length === 0) return false;
+
+                    messages = savedMessages.slice(-10);
+                    history = savedHistory.slice(-12);
+                    messagesEl.innerHTML = '';
+                    for (var i = 0; i < messages.length; i++) {
+                        appendMessage(messages[i].role, messages[i].text, true);
+                    }
+                    return true;
+                } catch (e) {
+                    return false;
+                }
+            }
+
+            async function sendMessage() {
+                var now = Date.now();
+                if (isSending || (now - lastSendAt) < SEND_DEBOUNCE_MS) return;
+
+                var message = (input.value || '').trim();
+                if (!message) return;
+
+                lastSendAt = now;
+                setError('');
+                appendMessage('user', message);
+                input.value = '';
+                isSending = true;
+                btnSend.disabled = true;
+                setStatus('Thinking...');
+
+                var loading = document.createElement('div');
+                loading.className = 'flex justify-start';
+                loading.innerHTML =
+                    '<div class="rounded-2xl rounded-bl-md bg-gray-100 text-gray-500 px-3 py-2 text-[13px] font-bold">' +
+                    'AI Tutor is thinking' +
+                    '<span class="inline-flex ml-1">' +
+                    '<span class="animate-bounce [animation-delay:0ms]">.</span>' +
+                    '<span class="animate-bounce [animation-delay:120ms]">.</span>' +
+                    '<span class="animate-bounce [animation-delay:240ms]">.</span>' +
+                    '</span>' +
+                    '</div>';
+                messagesEl.appendChild(loading);
+                messagesEl.scrollTop = messagesEl.scrollHeight;
+
+                var context = getPageContext();
+                var payload = {
+                    message: message,
+                    moduleId: context.moduleId,
+                    pagePath: context.pagePath,
+                    history: history.slice(-6)
+                };
+
+                try {
+                    var res = await fetch(endpoint, {
+                        method: 'POST',
+                        credentials: 'same-origin',
+                        headers: { 'Content-Type': 'application/json; charset=utf-8' },
+                        body: JSON.stringify(payload)
+                    });
+
+                    var rawText = await res.text();
+                    var data = null;
+                    try { data = rawText ? JSON.parse(rawText) : null; } catch (e) { }
+                    if (loading.parentNode === messagesEl) messagesEl.removeChild(loading);
+
+                    if (!res.ok || !data || data.ok !== true) {
+                        var code = data && data.code ? data.code : '';
+                        var msg = data && data.error ? data.error : ('Request failed (' + res.status + ').');
+                        if (!data && rawText) msg = rawText.slice(0, 160);
+                        if (code === 'RATE_LIMIT') {
+                            setError('Tutor is busy right now. Please wait a moment and try again.', code);
+                        } else {
+                            setError(msg, code);
+                        }
+                        setModel(data && data.model ? data.model : '');
+                        setStatus('Failed');
+                        return;
+                    }
+
+                    appendMessage('assistant', data.answer || 'No response generated.');
+                    history.push({ role: 'user', text: message });
+                    history.push({ role: 'assistant', text: (data.answer || '').slice(0, 500) });
+                    if (history.length > 12) history = history.slice(history.length - 12);
+                    setModel(data.model || '');
+                    setStatus('Done');
+                    saveState();
+                } catch (err) {
+                    if (loading.parentNode === messagesEl) messagesEl.removeChild(loading);
+                    setError('Network issue while contacting tutor. Please retry.', 'NETWORK_ERROR');
+                    setStatus('Failed');
+                } finally {
+                    isSending = false;
+                    btnSend.disabled = false;
+                }
+            }
+
+            btnOpen.addEventListener('click', function () { toggle(true); });
+            btnClose.addEventListener('click', function () { toggle(false); });
+            btnSend.addEventListener('click', sendMessage);
+            if (btnClear) btnClear.addEventListener('click', clearChat);
+            input.addEventListener('keydown', function (e) {
+                if (e.key === 'Enter' && !e.shiftKey) {
+                    e.preventDefault();
+                    sendMessage();
+                }
+            });
+
+            if (!restoreState()) {
+                appendMessage('assistant', 'Hi! I am your AI Tutor. Ask any math question and I will guide you step-by-step.');
+            }
+        })();
+    </script>
+
+</form>
+</body>
+</html>
+
+
+
+
+
+
+
+
+

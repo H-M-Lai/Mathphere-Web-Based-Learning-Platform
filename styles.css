@@ -1,0 +1,337 @@
+﻿/* ================================================================
+   MathSphere - Global Stylesheet
+   Link this in every .aspx page inside <head runat="server">:
+   <link href="~/Content/site.css" rel="stylesheet" />
+   ================================================================ */
+
+/* ── Tailwind custom component classes ──────────────────────────── */
+
+/* Card used across DetailedReview, FinalAssessment */
+.math-card {
+    background-color: #ffffff;
+    border-radius: 2rem;
+    box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.04);
+    border-bottom: 8px solid #f3f4f6;
+}
+
+/* Module card hover effect (BrowseModule) */
+.module-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+    .module-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25);
+    }
+
+/* Primary button style */
+.btn-primary {
+    background-color: #2563eb;
+    color: #ffffff;
+    font-weight: 900;
+    padding: 1rem 2.5rem;
+    border-radius: 1rem;
+    box-shadow: 0 10px 15px -3px rgba(37,99,235,0.2);
+    transition: transform 0.15s ease, background-color 0.15s ease;
+    border: none;
+    cursor: pointer;
+}
+
+    .btn-primary:hover {
+        background-color: #1d4ed8;
+        transform: scale(1.02);
+    }
+
+    .btn-primary:active {
+        transform: scale(0.97);
+    }
+
+/* Secondary/outline button */
+.btn-secondary {
+    background-color: #ffffff;
+    color: #2563eb;
+    font-weight: 900;
+    padding: 1rem 2.5rem;
+    border-radius: 1rem;
+    border: 2px solid rgba(37,99,235,0.2);
+    box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+    transition: background-color 0.15s ease;
+    cursor: pointer;
+}
+
+    .btn-secondary:hover {
+        background-color: #eff6ff;
+    }
+
+/* Yellow/primary action button */
+.btn-action {
+    background-color: #f9d006;
+    color: #1e3a8a;
+    font-weight: 900;
+    padding: 1.25rem 4rem;
+    border-radius: 1rem;
+    box-shadow: 0 10px 15px -3px rgba(249,208,6,0.3);
+    transition: transform 0.15s ease, background-color 0.15s ease;
+    border: none;
+    cursor: pointer;
+}
+
+    .btn-action:hover {
+        background-color: #facc15;
+    }
+
+    .btn-action:active {
+        transform: scale(0.97);
+    }
+
+/* ── Material Symbols base settings ─────────────────────────────── */
+.material-symbols-outlined {
+    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+}
+
+.fill-icon {
+    font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+}
+
+/* ── Grid background (used on body across all pages) ────────────── */
+.grid-bg {
+    background-image: linear-gradient(rgba(0,0,0,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(0,0,0,0.05) 1px, transparent 1px);
+    background-size: 30px 30px;
+}
+
+/* ── Header ─────────────────────────────────────────────────────── */
+.site-header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: rgba(255,255,255,0.9);
+    backdrop-filter: blur(12px);
+    border-bottom: 4px solid rgba(37,99,235,0.1);
+    padding: 1rem 2rem;
+}
+
+/* ── Nav links ──────────────────────────────────────────────────── */
+.nav-link {
+    font-weight: 900;
+    font-size: 0.75rem;
+    color: #9ca3af;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    text-decoration: none;
+    transition: color 0.15s ease;
+}
+
+    .nav-link:hover {
+        color: #2563eb;
+    }
+
+.nav-link-active {
+    font-weight: 900;
+    font-size: 0.75rem;
+    color: #2563eb;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    text-decoration: none;
+    border-bottom: 2px solid #2563eb;
+    padding-bottom: 4px;
+}
+
+/* ── Streak / XP pill ───────────────────────────────────────────── */
+.streak-pill {
+    background-color: #f9d006;
+    color: #1e3a8a;
+    padding: 0.375rem 1rem;
+    border-radius: 9999px;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 900;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+/* ── Sidebar ────────────────────────────────────────────────────── */
+.site-sidebar {
+    width: 20rem;
+    background-color: #ffffff;
+    border-right: 4px solid rgba(37,99,235,0.1);
+    overflow-y: auto;
+    flex-shrink: 0;
+    z-index: 20;
+}
+
+/* ── Question cards ─────────────────────────────────────────────── */
+.question-card {
+    background-color: #ffffff;
+    border-radius: 3rem;
+    box-shadow: 0 25px 50px -12px rgba(0,0,0,0.15);
+    border: 2px solid #f3f4f6;
+    margin-bottom: 2.5rem;
+    padding: 2.5rem;
+    overflow: hidden;
+}
+
+/* ── Answer option states ────────────────────────────────────────── */
+.option-correct {
+    padding: 1rem;
+    border-radius: 1rem;
+    border: 2px solid #84cc16;
+    background-color: #f0fdf4;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.option-wrong {
+    padding: 1rem;
+    border-radius: 1rem;
+    border: 2px solid #ef4444;
+    background-color: #fef2f2;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.option-normal {
+    padding: 1rem;
+    border-radius: 1rem;
+    border: 2px solid #f3f4f6;
+    background-color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.option-selectable {
+    padding: 1rem;
+    border-radius: 1rem;
+    border: 2px solid #f3f4f6;
+    background-color: #ffffff;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    cursor: pointer;
+    transition: border-color 0.15s ease;
+    width: 100%;
+    text-align: left;
+}
+
+    .option-selectable:hover {
+        border-color: rgba(37,99,235,0.3);
+    }
+
+.option-selected {
+    border-color: #2563eb;
+    background-color: #eff6ff;
+}
+
+/* ── Progress bar ────────────────────────────────────────────────── */
+.progress-track {
+    height: 0.75rem;
+    width: 100%;
+    background-color: #f3f4f6;
+    border-radius: 9999px;
+    overflow: hidden;
+    border: 1px solid #f3f4f6;
+}
+
+.progress-fill {
+    height: 100%;
+    background-color: #2563eb;
+    border-radius: 9999px;
+}
+
+/* ── Solution breakdown box ──────────────────────────────────────── */
+.solution-box {
+    background-color: #fefce8;
+    border: 2px solid rgba(249,208,6,0.3);
+    border-radius: 1.5rem;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+/* ── Question map dot (correct) ──────────────────────────────────── */
+.map-dot-correct {
+    width: 3rem;
+    height: 3rem;
+    border-radius: 9999px;
+    background-color: #84cc16;
+    border-bottom: 4px solid #4d7c0f;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ffffff;
+    font-weight: 900;
+    font-size: 0.875rem;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.map-dot-incorrect {
+    width: 3rem;
+    height: 3rem;
+    border-radius: 9999px;
+    background-color: #ef4444;
+    border-bottom: 4px solid #b91c1c;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ffffff;
+    font-weight: 900;
+    font-size: 0.875rem;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+/* ── ASP.NET Button reset (removes default browser styling) ─────── */
+input[type="submit"],
+input[type="button"] {
+    -webkit-appearance: none;
+    appearance: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+/* ── ASP.NET TextBox reset ───────────────────────────────────────── */
+input[type="text"],
+textarea {
+    outline: none;
+}
+
+    input[type="text"]:focus,
+    textarea:focus {
+        ring: 4px rgba(37,99,235,0.2);
+    }
+
+/* ── Footer ─────────────────────────────────────────────────────── */
+.site-footer {
+    padding: 1.5rem;
+    border-top: 4px solid rgba(37,99,235,0.1);
+    background-color: #ffffff;
+    z-index: 30;
+}
+
+.footer-link {
+    font-size: 0.75rem;
+    font-weight: 900;
+    color: #6b7280;
+    text-decoration: none;
+    transition: color 0.15s ease;
+}
+
+    .footer-link:hover {
+        color: #2563eb;
+    }
+
+/* ── Utility: screen-only background decorative icons ───────────── */
+.bg-icon {
+    pointer-events: none;
+    position: absolute;
+    opacity: 0.05;
+}
